@@ -1,4 +1,7 @@
----@alias LspKeySpec LazyKeysSpec|{has?:string|string[], cond?:fun():boolean}
+---@diagnostic disable: inject-field
+
+---@alias LspMethod vim.lsp.protocol.Method.ClientToServer
+---@alias LspKeySpec LazyKeysSpec|{has?:LspMethod|LspMethod[], cond?:fun():boolean}
 ---@alias LspKeys LazyKeys|{has?:string|string[], cond?:fun():boolean}
 
 local M = {}
@@ -16,7 +19,7 @@ function M.get()
   M._keys = {
     { "<leader>cl", function() Snacks.picker.lsp_config() end, desc = "Lsp Info", },
     { "<leader>cL", "<cmd>checkhealth vim.lsp<cr>", desc = "Lsp Info", },
-    { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
+    { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "textDocument/definition" },
     { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
     { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
     { "gD", vim.lsp.buf.declaration, desc = "Goto Declaraion" },
@@ -27,7 +30,7 @@ function M.get()
         return vim.lsp.buf.signature_help()
       end,
       desc = "Signature Help",
-      has = "signatureHelp",
+      has = "textDocument/signatureHelp",
     },
     {
       "<c-k>",
@@ -36,11 +39,11 @@ function M.get()
       end,
       mode = "i",
       desc = "Signature Help",
-      has = "signatureHelp",
+      has = "textDocument/signatureHelp",
     },
-    { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-    { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
-    { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
+    { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "textDocument/codeAction" },
+    { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "textDocument/codeLens" },
+    { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "textDocument/codeLens" },
     {
       "<leader>cR",
       function()
@@ -59,18 +62,18 @@ function M.get()
       end,
       expr = true,
       desc = "Rename (inc-rename)",
-      has = "rename",
+      has = "textDocument/rename",
     },
-    { "<leader>cA", require("kayzels.lsp.util").action.source, desc = "Source Action", has = "codeAction" },
-    { "]]", function() Snacks.words.jump(vim.v.count1) end, has = "documentHighlight",
+    { "<leader>cA", require("kayzels.lsp.util").action.source, desc = "Source Action", has = "textDocument/codeAction" },
+    { "]]", function() Snacks.words.jump(vim.v.count1) end, has = "textDocument/documentHighlight",
       desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
-    { "[[", function() Snacks.words.jump(-vim.v.count1) end, has = "documentHighlight",
+    { "[[", function() Snacks.words.jump(-vim.v.count1) end, has = "textDocument/documentHighlight",
       desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end, },
-    { "<a-n>", function() Snacks.words.jump(vim.v.count1, true) end, has = "documentHighlight",
+    { "<a-n>", function() Snacks.words.jump(vim.v.count1, true) end, has = "textDocument/documentHighlight",
       desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
-    { "<a-p>", function() Snacks.words.jump(-vim.v.count1, true) end, has = "documentHighlight",
+    { "<a-p>", function() Snacks.words.jump(-vim.v.count1, true) end, has = "textDocument/documentHighlight",
       desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end, },
-    { "<leader>ss", function () Snacks.picker.lsp_symbols({ filter = require("kayzels.utils.filter").kind_filter }) end, desc = "LSP Symbols", has = "documentSymbols" },
+    { "<leader>ss", function () Snacks.picker.lsp_symbols({ filter = require("kayzels.utils.filter").kind_filter }) end, desc = "LSP Symbols", has = "textDocument/documentSymbol" },
     { "<leader>sS", function () Snacks.picker.lsp_workspace_symbols({ filter = require("kayzels.utils.filter").kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbol" }
   }
 
@@ -79,7 +82,7 @@ end
 
 ---Returns whether any of the clients attached to a buffer support a specific LSP method
 ---@param buffer number
----@param method string|string[]
+---@param method LspMethod|LspMethod[]
 function M.has(buffer, method)
   if type(method) == "table" then
     for _, m in ipairs(method) do
@@ -89,7 +92,6 @@ function M.has(buffer, method)
     end
     return false
   end
-  method = method:find("/") and method or "textDocument/" .. method
   local clients = vim.lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
     if client:supports_method(method, buffer) then
@@ -110,6 +112,7 @@ M.server_keys = {
   },
 }
 
+---Adds server specific keys to the keymaps that should be added to a buffer
 ---@param buffer number
 ---@return LspKeys[]
 function M.resolve(buffer)
