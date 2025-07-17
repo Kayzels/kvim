@@ -1,6 +1,8 @@
 return {
   {
     "snacks.nvim",
+    ---@module 'snacks'
+    ---@type snacks.config
     opts = {
       dashboard = {
         preset = {

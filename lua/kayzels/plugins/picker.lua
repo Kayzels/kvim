@@ -1,7 +1,21 @@
 -- TODO: Disinguish between cwd and root
+-- TODO: Snacks picker add way to do horizontal split with C-x
 return {
   {
     "folke/snacks.nvim",
+    ---@module 'snacks'
+    ---@type snacks.Config
+    opts = {
+      picker = {
+        ui_select = true,
+        formatters = {
+          file = {
+            filename_first = true,
+          },
+        },
+      },
+    },
+    -- stylua: ignore
     keys = {
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
@@ -48,7 +62,7 @@ return {
       { "<leader>su", function() Snacks.picker.undo() end, desc = "Undotree" },
       -- ui
       { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
-    }
+    },
   },
   {
     "folke/todo-comments.nvim",

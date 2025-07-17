@@ -1,15 +1,28 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- set an empty statusline till lualine loads
+        vim.o.statusline = " "
+      else
+        -- hide the statusline on the starter page
+        vim.o.laststatus = 0
+      end
+    end,
     dependencies = {
       "folke/trouble.nvim",
-      "folke/snacks.nvim"
+      -- "folke/snacks.nvim",
     },
     opts = function()
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
       local icons = require("kayzels.icons")
+
+      vim.o.laststatus = vim.g.lualine_laststatus
 
       local lualine_util = require("kayzels.utils.lualine")
 
@@ -31,10 +44,10 @@ return {
           },
           lualine_b = {
             {
-              function ()
+              function()
                 return vim.fs.basename(require("kayzels.utils.root").cwd())
               end,
-              padding = { left = 2, right = 2},
+              padding = { left = 2, right = 2 },
               color = nil,
             },
             { "branch", padding = { left = 1, right = 1 } },
@@ -48,10 +61,10 @@ return {
                 warn = icons.diagnostics.Warn,
                 info = icons.diagnostics.Info,
                 hint = icons.diagnostics.Hint,
-              }
+              },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { lualine_util.pretty_path() }
+            { lualine_util.pretty_path() },
           },
           lualine_x = {
             Snacks.profiler.status(),
@@ -97,13 +110,13 @@ return {
         },
         tabline = {
           lualine_a = lualine_util.create_tab_component("tabs"),
-          lualine_z = lualine_util.create_tab_component("buffers")
+          lualine_z = lualine_util.create_tab_component("buffers"),
         },
         winbar = {
-          lualine_a = lualine_util.create_fname_bar(true)
+          lualine_a = lualine_util.create_fname_bar(true),
         },
         inactive_winbar = {
-          lualine_b = lualine_util.create_fname_bar(false)
+          lualine_b = lualine_util.create_fname_bar(false),
         },
         extensions = {
           "lazy",
@@ -113,7 +126,7 @@ return {
           "quickfix",
           "trouble",
           -- "fzf"
-        }
+        },
       }
       return opts
     end,
@@ -139,7 +152,6 @@ return {
           local buf_client_names = {}
           for _, client in pairs(buf_clients) do
             if not vim.tbl_contains(vim.g.root_lsp_ignore, client.name) then
-            -- if client.name ~= "copilot" then
               table.insert(buf_client_names, client.name)
             end
           end
@@ -182,8 +194,8 @@ return {
                 ext_table.sections[section] = {
                   {
                     orig,
-                    separator = sep_tbl
-                  }
+                    separator = sep_tbl,
+                  },
                 }
               end
             end
@@ -196,7 +208,10 @@ return {
       set_extension_separators("mason", { lualine_a = { left = "" } })
       -- set_extension_separators("neo-tree", { lualine_a = { left = "", right = "" } })
       -- set_extension_separators("fzf", { lualine_a = { left = "", right = "" }, lualine_z = { right = "" } })
-      set_extension_separators("quickfix", { lualine_a = { left = "" }, lualine_z = { left = "", right = ""} })
+      set_extension_separators(
+        "quickfix",
+        { lualine_a = { left = "" }, lualine_z = { left = "", right = "" } }
+      )
     end,
   },
 }

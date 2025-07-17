@@ -23,16 +23,16 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
-require("kayzels.utils.plugin").lazy_file()
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
 
 require("lazy").setup({
   spec = {
     { import = "kayzels.plugins" },
     { import = "kayzels.plugins.ui" },
     { import = "kayzels.plugins.coding" },
+    { import = "kayzels.plugins.editor" },
+    { import = "kayzels.plugins.lang.json" },
+    { import = "kayzels.plugins.lang.markdown" },
+    { import = "kayzels.plugins.lang.python" },
   },
   rocks = {
     enabled = false,

@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 local opt = vim.opt
 
 opt.autowrite = true
@@ -11,29 +14,28 @@ opt.confirm = true
 opt.cursorline = true
 opt.expandtab = true
 
--- NOTE: Winbar and statuslines can be done here,
--- if not using Lualine
 opt.fillchars = {
   foldopen = "",
   foldclose = "",
   foldsep = " ",
+  fold = " ",
   eob = " ",
 }
 opt.foldlevel = 99
 
--- TODO: opt.foldexpr
--- TODO: opt.foldtext
+opt.foldmethod = "expr"
 opt.foldtext = ""
 
--- TODO: opt.formatexpr
+opt.formatexpr = "v:lua.require'kayzels.utils.format'.formatexpr()"
 
 -- NOTE:To remove unwanted comment at start,
 -- use i_CTRL-U (removes preceding chars in line)
 opt.formatoptions = "jcroqlnt" -- Default is tcqj
 
 opt.grepprg = "rg --vimgrep"
-opt.guicursor =
-  "n-v-c-sm:block,i-ci-ve:ver25-blinkon1200-blinkoff1200,r-cr-o:hor20,t:ver25-blinkon500-blinkoff500-TermCursor"
+
+-- NOTE: Setting with autocmd instead, don't want this written down twice
+-- opt.guicursor
 opt.ignorecase = true
 opt.inccommand = "nosplit" -- preview incremental substitute
 opt.jumpoptions = "view"
@@ -87,8 +89,6 @@ opt.splitbelow = true -- Put new window below current, rather than above
 opt.splitkeep = "screen"
 opt.splitright = true -- Put new window to the right of current, rather than left
 
--- TODO: Status column using Snacks
-
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true
 opt.tildeop = true -- Use tilde as operator instead of just per character
@@ -110,3 +110,6 @@ vim.g.loaded_ruby_provider = 0
 
 -- Disable LSPs being used for roots
 vim.g.root_lsp_ignore = { "copilot" }
+
+-- Enable autoformatting
+vim.g.autoformat = true

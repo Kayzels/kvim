@@ -111,11 +111,6 @@ end, { desc = "Quickfix List" })
 map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
--- TODO: formatting
--- map({ "n", "v" }, "<leader>cf", function()
---   LazyVim.format({ force = true })
--- end, { desc = "Format" })
-
 -- diagnostic
 local diagnostic_goto = function(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
@@ -133,15 +128,25 @@ map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
 -- toggle options
--- TODO: LazyVim.format.snacks_toggle():map("<leader>uf")
--- TODO: LazyVim.format.snacks_toggle(true):map("<leader>uF")
 Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
 Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
 Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
 Snacks.toggle.diagnostics():map("<leader>ud")
 Snacks.toggle.line_number():map("<leader>ul")
-Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }):map("<leader>uc")
-Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }):map("<leader>uA")
+Snacks.toggle
+  .option("conceallevel", {
+    off = 0,
+    on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+    name = "Conceal Level",
+  })
+  :map("<leader>uc")
+Snacks.toggle
+  .option("showtabline", {
+    off = 0,
+    on = vim.o.showtabline > 0 and vim.o.showtabline or 2,
+    name = "Tabline",
+  })
+  :map("<leader>uA")
 Snacks.toggle.treesitter():map("<leader>uT")
 Snacks.toggle.dim():map("<leader>uD")
 Snacks.toggle.animate():map("<leader>ua")
@@ -156,14 +161,29 @@ end
 
 -- lazygit
 if vim.fn.executable("lazygit") == 1 then
-  map("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
+  map("n", "<leader>gg", function()
+    Snacks.lazygit()
+  end, { desc = "Lazygit" })
 end
-map("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
-map("n", "<leader>gl", function() Snacks.picker.git_log() end, { desc = "Git Log" })
-map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
-map({ "n", "x" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
-map({"n", "x" }, "<leader>gY", function()
-  Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
+map("n", "<leader>gf", function()
+  Snacks.picker.git_log_file()
+end, { desc = "Git Current File History" })
+map("n", "<leader>gl", function()
+  Snacks.picker.git_log()
+end, { desc = "Git Log" })
+map("n", "<leader>gb", function()
+  Snacks.picker.git_log_line()
+end, { desc = "Git Blame Line" })
+map({ "n", "x" }, "<leader>gB", function()
+  Snacks.gitbrowse()
+end, { desc = "Git Browse (open)" })
+map({ "n", "x" }, "<leader>gY", function()
+  Snacks.gitbrowse({
+    open = function(url)
+      vim.fn.setreg("+", url)
+    end,
+    notify = false,
+  })
 end, { desc = "Git Browse (copy)" })
 
 -- quit
@@ -171,7 +191,10 @@ map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- highlights under cursor
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
-map("n", "<leader>uI", function() vim.treesitter.inspect_tree() vim.api.nvim_input("I") end, { desc = "Inspect Tree" })
+map("n", "<leader>uI", function()
+  vim.treesitter.inspect_tree()
+  vim.api.nvim_input("I")
+end, { desc = "Inspect Tree" })
 
 -- TODO: Terminal mappings
 
@@ -190,3 +213,39 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+--Use U for redo
+vim.keymap.set("n", "U", "<cmd>redo<cr>", { silent = true, desc = "Redo" })
+
+-- Yank line on `dd` only if not empty
+vim.keymap.set("n", "dd", function()
+  if vim.fn.getline("."):match("^%s*$") then
+    return '"_dd'
+  end
+  return "dd"
+end, { expr = true })
+
+-- Stop going to new line if enter pressed at end of command (example with <C-S> for save)
+vim.keymap.set("n", "<CR>", "<Nop>")
+
+-- Toggle winbar
+Snacks.toggle({
+  name = "Winbar",
+  get = function()
+    return #(vim.opt.winbar:get()) > 0
+  end,
+  set = function(state)
+    require("lualine").hide({
+      place = { "winbar" },
+      unhide = state,
+    })
+  end,
+}):map("<leader>uv")
+
+-- Toggle formatting
+require("kayzels.utils.format").snacks_toggle():map("<leader>uf")
+require("kayzels.utils.format").snacks_toggle(true):map("<leader>uF")
+
+map({ "n", "v" }, "<leader>cf", function ()
+  require("kayzels.utils.format").format({ force = true })
+end, { desc = "Format" })

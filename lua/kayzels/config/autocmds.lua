@@ -17,12 +17,22 @@ vim.api.nvim_create_autocmd("OptionSet", {
   callback = require("kayzels.utils.theme").set_theme,
 })
 
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = augroup("checktime"),
+  callback = function()
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd("checktime")
+    end
+  end,
+})
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
   callback = function()
     (vim.hl or vim.highlight).on_yank()
-  end
+  end,
 })
 
 -- resize splits if window got resized
@@ -126,4 +136,28 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
+})
+
+-- Move help window to the right when opened
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  group = augroup("help_window_right"),
+  pattern = { "*.txt", "*.md" },
+  callback = function()
+    if vim.o.filetype == "help" then
+      vim.cmd.winc("L")
+    end
+  end,
+})
+
+-- Change cursor when leaving and entering Neovim
+local cursor_group = augroup("change_cursor")
+vim.api.nvim_create_autocmd({ "VimLeave", "VimSuspend" }, {
+  group = cursor_group,
+  pattern = "*",
+  command = "set guicursor=a:ver25-blinkwait700-blinkoff400-blinkon250",
+})
+vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
+  group = cursor_group,
+  pattern = "*",
+  command = "set guicursor=n-v-c-sm:block,i-ci-ve:ver25-blinkon1200-blinkoff1200,r-cr-o:hor20,t:ver25-blinkon500-blinkoff500-TermCursor",
 })

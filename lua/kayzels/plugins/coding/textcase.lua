@@ -80,9 +80,9 @@ return {
       require("textcase").setup(opts)
     end,
     opts = {
-      default_keymappings_enabled = false
+      default_keymappings_enabled = false,
     },
     keys = set_text_case_mappings,
-    cmd = { "Subs", }
-  }
+    cmd = { "Subs" },
+  },
 }

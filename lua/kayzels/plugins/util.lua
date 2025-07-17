@@ -13,10 +13,14 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    ---@module 'snacks'
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
       quickfile = { enabled = true },
+      lazygit = {
+        configure = false,
+      },
       terminal = {
         win = {
           keys = {
@@ -32,6 +36,8 @@ return {
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
+    ---@module 'persistence'
+    ---@type Persistence.Config
     opts = {},
     -- stylua: ignore
     keys = {
@@ -39,6 +45,39 @@ return {
       { "<leader>qS", function() require("persistence").select() end,desc = "Select Session" },
       { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
       { "<leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
+    },
+  },
+  {
+    "echasnovski/mini.hipatterns",
+    opts = function()
+      local hi = require("mini.hipatterns")
+      return {
+        highlighters = {
+          hex_color = hi.gen_highlighter.hex_color(),
+          zero_x_hex = {
+            pattern = "0x%x%x%x%x%x%x",
+            ---@param _ any
+            ---@param match string
+            group = function(_, match)
+              ---@type string
+              local color = match:gsub("0x", "#")
+              return MiniHipatterns.compute_hex_color_group(color, "bg")
+            end,
+          },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("mini.hipatterns").setup(opts)
+    end,
+  },
+  {
+    "Aasim-A/scrollEOF.nvim",
+    event = { "CursorMoved", "WinScrolled" },
+    ---@type {pattern?:string, insert_mode?:boolean, floating?:boolean, disabled_filetypes?:string[], disabled_modes?:string[]}
+    opts = {
+      floating = false,
+      insert_mode = false,
     },
   },
 }

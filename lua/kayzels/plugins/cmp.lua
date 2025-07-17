@@ -8,14 +8,14 @@ return {
     event = "InsertEnter",
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "folke/lazydev.nvim"
+      "folke/lazydev.nvim",
     },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
       -- TODO: Sort out snippets
       appearance = {
-        nerd_font_variant = "normal"
+        nerd_font_variant = "normal",
       },
       completion = {
         accept = {
@@ -25,7 +25,7 @@ return {
           selection = {
             preselect = true,
             auto_insert = true,
-          }
+          },
         },
         menu = {
           draw = {
@@ -41,7 +41,7 @@ return {
                 ellipsis = false,
                 text = function(ctx)
                   return ctx.kind_icon
-                end
+                end,
               },
               split_icon = {
                 ellipsis = false,
@@ -69,13 +69,14 @@ return {
           auto_show = true,
           auto_show_delay_ms = 200,
           window = {
-            border  = "rounded"
+            border = "rounded",
           },
         },
         ghost_text = { enabled = true },
       },
       signature = {
-        enabled = true
+        enabled = false,
+        -- enabled = true
       },
       -- cmdline = {
       --   enabled = true
@@ -93,7 +94,7 @@ return {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
             score_offset = 100,
-          }
+          },
         },
       },
       keymap = {
@@ -102,7 +103,7 @@ return {
         ["<S-Space>"] = { "hide" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
       },
-    }
+    },
   },
   -- {
   --   "saghen/blink.cmp",

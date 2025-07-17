@@ -2,14 +2,21 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
+    ---@module 'flash'
+    ---@type Flash.Config
     opts = {},
     keys = {
-    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    }
+      -- stylua: ignore
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash", },
+      -- stylua: ignore
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter", },
+      -- stylua: ignore
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash", },
+      -- stylua: ignore
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search", },
+      -- stylua: ignore
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search", },
+    },
   },
   {
     -- "folke/which-key.nvim",
@@ -17,6 +24,8 @@ return {
     "iguanacucumber/which-key.nvim",
     event = "VeryLazy",
     opts_extend = { "spec" },
+    ---@module 'which-key'
+    ---@type wk.Opts
     opts = {
       preset = "classic",
       win = {
@@ -157,6 +166,8 @@ return {
   {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
+    ---@module 'trouble'
+    ---@type trouble.Config
     opts = {
       modes = {
         lsp = {
@@ -175,6 +186,7 @@ return {
         "[q",
         function()
           if require("trouble").is_open() then
+            ---@diagnostic disable-next-line: missing-fields, missing-parameter
             require("trouble").prev({ skip_groups = true, jump = true })
           else
             local ok, err = pcall(vim.cmd.cprev)
@@ -189,6 +201,7 @@ return {
         "]q",
         function()
           if require("trouble").is_open() then
+            ---@diagnostic disable-next-line: missing-fields, missing-parameter
             require("trouble").next({ skip_groups = true, jump = true })
           else
             local ok, err = pcall(vim.cmd.cnext)
@@ -207,6 +220,8 @@ return {
     -- lazy = false,
     -- event = {"BufReadPost", "BufNewFile", "BufWritePre"},
     event = "LazyFile",
+    ---@module 'todo-comments'
+    ---@type TodoOptions
     opts = {},
     -- stylua: ignore
     keys = {
@@ -216,11 +231,4 @@ return {
       { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
     },
   },
-  {
-    "mikavilpas/yazi.nvim",
-    keys = {
-      { "<leader>y", function() require("yazi").yazi() end, desc = "Explorer Yazi" }
-    },
-    opts = {}
-  }
 }

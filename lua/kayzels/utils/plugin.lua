@@ -8,4 +8,8 @@ function M.lazy_file()
   Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 end
 
+function M.setup()
+  M.lazy_file()
+end
+
 return M

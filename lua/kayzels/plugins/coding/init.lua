@@ -7,30 +7,22 @@ return {
       -- skip autopair when next character is one of these
       skip_next = [=[[%w%%%'%[%"%.%`%$]]=],
       -- skip autopair when the cursor is inside these treesitter nodes
-      skip_ts = { "string" },
+      -- skip_ts = { "string" },
+      skip_ts = {},
       -- skip autopair when next character is closing pair
       -- and there are more closing pairs than opening pairs
-      skip_unbalanced = true,
+      skip_unbalanced = false,
       -- better deal with markdown code blocks
       markdown = true,
     },
     config = function(_, opts)
-      Snacks.toggle({
-        name = "Mini Pairs",
-        get = function()
-          return not vim.g.minipairs_disable
-        end,
-        set = function(state)
-          vim.g.minipairs_disable = not state
-        end,
-      }):map("<leader>up")
-      require("mini.pairs").setup(opts)
-    end
+      require("kayzels.utils.mini").pairs(opts)
+    end,
   },
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
-    opts = {}
+    opts = {},
   },
   {
     "echasnovski/mini.ai",
@@ -62,8 +54,8 @@ return {
       require("mini.ai").setup(opts)
       local on_load = require("kayzels.utils").on_load
 
-      on_load("which-key.nvim", function ()
-        vim.schedule(function ()
+      on_load("which-key.nvim", function()
+        vim.schedule(function()
           require("kayzels.utils.mini").ai_whichkey(opts)
         end)
       end)
@@ -73,55 +65,12 @@ return {
     "folke/lazydev.nvim",
     ft = "lua",
     cmd = "LazyDev",
+    ---@module 'lazydev'
+    ---@type lazydev.Config
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "snacks.nvim", words = { "Snacks" } },
-      }
-    }
-  },
-  {
-    "kawre/neotab.nvim",
-    event = "InsertEnter",
-    opts = {
-      pairs = {
-        { open = "(", close = ")" },
-        { open = "[", close = "]" },
-        { open = "{", close = "}" },
-        { open = "'", close = "'" },
-        { open = '"', close = '"' },
-        { open = "`", close = "`" },
-        { open = "`", close = "'" },
-        { open = "<", close = ">" },
-        { open = "$", close = "$" },
-      }
-    }
-  },
-  {
-    "chrisgrieser/nvim-spider",
-    lazy = true,
-    vscode = true,
-    opts = {
-      skipInsignificantPunctuation = false,
-    },
-    keys = {
-      {
-        "w",
-        "<cmd>lua require('spider').motion('w')<CR>",
-        mode = { "n", "o", "x" },
-        desc = "Next word",
-      },
-      {
-        "e",
-        "<cmd>lua require('spider').motion('e')<CR>",
-        mode = { "n", "o", "x" },
-        desc = "Next end of word",
-      },
-      {
-        "b",
-        "<cmd>lua require('spider').motion('b')<CR>",
-        mode = { "n", "o", "x" },
-        desc = "Previous end of word",
       },
     },
   },
