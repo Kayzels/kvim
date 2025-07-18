@@ -5,12 +5,6 @@ end
 -- Change color schemes on background change
 local colorscheme_augroup = augroup("color_scheme")
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  group = colorscheme_augroup,
-  callback = require("kayzels.utils.theme").set_theme,
-  once = true,
-})
-
 vim.api.nvim_create_autocmd("OptionSet", {
   group = colorscheme_augroup,
   pattern = "background",
