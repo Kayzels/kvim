@@ -39,7 +39,7 @@ return {
     opts = {
       ---@diagnostic disable-next-line: missing-fields
       options = {
-        notify_user_on_venv_activation = true,
+        notify_user_on_venv_activation = false,
       },
     },
     ft = "python",
