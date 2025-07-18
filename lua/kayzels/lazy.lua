@@ -33,6 +33,8 @@ require("lazy").setup({
     { import = "kayzels.plugins.lang.json" },
     { import = "kayzels.plugins.lang.markdown" },
     { import = "kayzels.plugins.lang.python" },
+    { import = "kayzels.plugins.ai.codecompanion" },
+    { import = "kayzels.plugins.ai.copilot" },
   },
   rocks = {
     enabled = false,

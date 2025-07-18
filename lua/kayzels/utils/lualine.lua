@@ -17,11 +17,11 @@ function M.format(component, text, hl_group)
   if not lualine_hl_group then
     local utils = require("lualine.utils.utils")
     ---@type string[]
-    local gui = vim.tbl_filter(function (x)
+    local gui = vim.tbl_filter(function(x)
       return x
     end, {
       utils.extract_highlight_colors(hl_group, "bold") and "bold",
-      utils.extract_highlight_colors(hl_group, "italic") and "italic"
+      utils.extract_highlight_colors(hl_group, "italic") and "italic",
     })
 
     lualine_hl_group = component:create_hl({
@@ -42,7 +42,7 @@ function M.pretty_path(opts)
     filename_hl = "Bold",
     modified_sign = "",
     readonly_icon = " 󰌾 ",
-    length = 3
+    length = 3,
   }, opts or {})
 
   return function(self)
@@ -68,7 +68,7 @@ function M.pretty_path(opts)
     if opts.length == 0 then
       parts = parts
     elseif #parts > opts.length then
-      parts = { parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts)}
+      parts = { parts[1], "…", unpack(parts, #parts - opts.length + 2, #parts) }
     end
 
     if opts.modified_hl and vim.bo.modified then
@@ -80,7 +80,7 @@ function M.pretty_path(opts)
 
     local dir = ""
     if #parts > 1 then
-      dir = table.concat({ unpack(parts, 1, #parts - 1)}, sep)
+      dir = table.concat({ unpack(parts, 1, #parts - 1) }, sep)
       dir = M.format(self, dir .. sep, opts.directory_hl)
     end
 
@@ -100,8 +100,8 @@ function M.root_dir(opts)
     parent = true,
     other = true,
     icon = "󱉭 ",
-    color = function ()
-      return { fg = Snacks.util.color("Special")}
+    color = function()
+      return { fg = Snacks.util.color("Special") }
     end,
   }, opts or {})
 
@@ -130,10 +130,10 @@ function M.root_dir(opts)
     function()
       return (opts.icon and opts.icon .. " ") .. get()
     end,
-    cond = function ()
+    cond = function()
       return type(get()) == "string"
     end,
-    color = opts.color
+    color = opts.color,
   }
 end
 
@@ -144,7 +144,7 @@ function M.get_mode_color(active)
   local lualine_index = active and "a" or "b"
 
   ---@return string
-  return function ()
+  return function()
     local suffix = require("lualine.highlight").get_mode_suffix()
     return "lualine_" .. lualine_index .. suffix
   end
@@ -197,6 +197,27 @@ function M.create_tab_component(component_name)
         inactive = M.get_mode_color(false),
       },
     },
+  }
+end
+
+---@param icon string
+---@param status fun(): nil|"ok"|"error"|"pending"
+function M.status(icon, status)
+  local colors = {
+    ok = "Special",
+    error = "DiagnosticError",
+    pending = "DiagnosticWarn",
+  }
+  return {
+    function()
+      return icon
+    end,
+    cond = function()
+      return status() ~= nil
+    end,
+    color = function()
+      return { fg = Snacks.util.color(colors[status()] or colors.ok) }
+    end,
   }
 end
 
