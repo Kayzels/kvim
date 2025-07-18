@@ -2,7 +2,7 @@ return {
   {
     "catppuccin/nvim",
     priority = 1000,
-    -- lazy = true,
+    lazy = true,
     name = "catppuccin",
     ---@module 'catppuccin'
     ---@type CatppuccinOptions

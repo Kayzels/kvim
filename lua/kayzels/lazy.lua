@@ -24,6 +24,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local KTheme = require("kayzels.utils.theme")
+local lazy_color = KTheme.theme_for_mode[KTheme.mode_on_open]
+
 require("lazy").setup({
   spec = {
     { import = "kayzels.plugins" },
@@ -57,8 +60,7 @@ require("lazy").setup({
     },
   },
   install = {
-    -- colorscheme = { "catppuccin" },
-    colorscheme = { "tokyonight-moon" },
+    colorscheme = { lazy_color },
   },
   ui = {
     border = "rounded",
