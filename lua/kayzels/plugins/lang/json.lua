@@ -1,7 +1,8 @@
 return {
   {
     "b0o/SchemaStore.nvim",
-    lazy = false,
+    -- Lazy load when needed, from LSP setting
+    lazy = true,
     version = false,
   },
 }
