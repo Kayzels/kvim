@@ -1,3 +1,4 @@
+---@class kayzels.utils.load
 local M = {}
 
 ---@param name string
@@ -14,12 +15,12 @@ function M.on_load(name, fn)
   else
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyLoad",
-      callback = function (event)
+      callback = function(event)
         if event.data == name then
           fn(name)
           return true
         end
-      end
+      end,
     })
   end
 end

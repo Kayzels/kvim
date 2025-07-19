@@ -43,13 +43,7 @@ end
 
 ---@param opts? LspFormat
 function M.format(opts)
-  opts = vim.tbl_deep_extend(
-    "force",
-    {},
-    opts or {},
-    M.format_options or {},
-    require("kayzels.utils").opts("conform.nvim").format or {}
-  )
+  opts = vim.tbl_deep_extend("force", {}, opts or {}, M.format_options or {}, KyzVim.opts("conform.nvim").format or {})
 
   local ok, conform = pcall(require, "conform")
 

@@ -24,7 +24,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local KTheme = require("kayzels.utils.theme")
+local KTheme = KyzVim.theme
 local lazy_color = KTheme.theme_for_mode[KTheme.mode_on_open]
 
 require("lazy").setup({

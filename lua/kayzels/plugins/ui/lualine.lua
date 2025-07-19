@@ -20,11 +20,7 @@ return {
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
-      local icons = require("kayzels.icons")
-
       vim.o.laststatus = vim.g.lualine_laststatus
-
-      local lualine_util = require("kayzels.utils.lualine")
 
       local opts = {
         options = {
@@ -45,7 +41,7 @@ return {
           lualine_b = {
             {
               function()
-                return vim.fs.basename(require("kayzels.utils.root").cwd())
+                return vim.fs.basename(KyzVim.root.cwd())
               end,
               padding = { left = 2, right = 2 },
               color = nil,
@@ -53,18 +49,18 @@ return {
             { "branch", padding = { left = 1, right = 1 } },
           },
           lualine_c = {
-            lualine_util.root_dir(),
+            KyzVim.lualine.root_dir(),
+            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { KyzVim.lualine.pretty_path() },
             {
               "diagnostics",
               symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warn,
-                info = icons.diagnostics.Info,
-                hint = icons.diagnostics.Hint,
+                error = KyzVim.icons.diagnostics.Error,
+                warn = KyzVim.icons.diagnostics.Warn,
+                info = KyzVim.icons.diagnostics.Info,
+                hint = KyzVim.icons.diagnostics.Hint,
               },
             },
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { lualine_util.pretty_path() },
           },
           lualine_x = {
             Snacks.profiler.status(),
@@ -89,9 +85,9 @@ return {
             {
               "diff",
               symbols = {
-                added = icons.git.added,
-                modified = icons.git.modified,
-                removed = icons.git.removed,
+                added = KyzVim.icons.git.added,
+                modified = KyzVim.icons.git.modified,
+                removed = KyzVim.icons.git.removed,
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict
@@ -109,23 +105,22 @@ return {
           lualine_z = { { "location", separator = { right = "" }, left_padding = 1 } },
         },
         tabline = {
-          lualine_a = lualine_util.create_tab_component("tabs"),
-          lualine_z = lualine_util.create_tab_component("buffers"),
+          lualine_a = KyzVim.lualine.create_tab_component("tabs"),
+          lualine_z = KyzVim.lualine.create_tab_component("buffers"),
         },
         winbar = {
-          lualine_a = lualine_util.create_fname_bar(true),
+          lualine_a = KyzVim.lualine.create_fname_bar(true),
         },
         inactive_winbar = {
-          lualine_b = lualine_util.create_fname_bar(false),
+          lualine_b = KyzVim.lualine.create_fname_bar(false),
         },
         extensions = {
           "lazy",
           "mason",
-          -- "neo-tree",
+          "neo-tree",
           -- "nvim-dap-ui",
           "quickfix",
           "trouble",
-          -- "fzf"
         },
       }
       return opts
@@ -206,7 +201,7 @@ return {
 
       set_extension_separators("lazy", { lualine_a = { left = "" } })
       set_extension_separators("mason", { lualine_a = { left = "" } })
-      -- set_extension_separators("neo-tree", { lualine_a = { left = "", right = "" } })
+      set_extension_separators("neo-tree", { lualine_a = { left = "", right = "" } })
       -- set_extension_separators("fzf", { lualine_a = { left = "", right = "" }, lualine_z = { right = "" } })
       set_extension_separators(
         "quickfix",

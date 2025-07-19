@@ -1,3 +1,4 @@
+---@class kayzels.utils.theme
 local M = {}
 
 ---@type 'dark'|'light'

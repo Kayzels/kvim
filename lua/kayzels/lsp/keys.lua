@@ -73,8 +73,8 @@ function M.get()
       desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
     { "<a-p>", function() Snacks.words.jump(-vim.v.count1, true) end, has = "textDocument/documentHighlight",
       desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end, },
-    { "<leader>ss", function () Snacks.picker.lsp_symbols({ filter = require("kayzels.utils.filter").kind_filter }) end, desc = "LSP Symbols", has = "textDocument/documentSymbol" },
-    { "<leader>sS", function () Snacks.picker.lsp_workspace_symbols({ filter = require("kayzels.utils.filter").kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbol" }
+    { "<leader>ss", function () Snacks.picker.lsp_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Symbols", has = "textDocument/documentSymbol" },
+    { "<leader>sS", function () Snacks.picker.lsp_workspace_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbol" }
   }
 
   return M._keys

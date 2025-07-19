@@ -62,7 +62,7 @@ return {
       table.insert(
         opts.sections.lualine_x,
         2,
-        require("kayzels.utils.lualine").status(require("kayzels.icons").kinds.Copilot, function()
+        KyzVim.lualine.status(KyzVim.icons.kinds.Copilot, function()
           local clients = package.loaded["copilot"] and vim.lsp.get_clients({ name = "copilot", bufnr = 0 }) or {}
           if #clients > 0 then
             local status = require("copilot.api").status.data.status

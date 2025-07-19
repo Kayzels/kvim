@@ -50,7 +50,7 @@ return {
 
     config = function ()
       vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
-      for name, sign in pairs(require("kayzels.icons").dap) do
+      for name, sign in pairs(KyzVim.icons.dap) do
         sign = type(sign) == "table" and sign or { sign }
         ---@cast sign string[]
         vim.fn.sign_define(

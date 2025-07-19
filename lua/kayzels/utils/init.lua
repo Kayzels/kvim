@@ -1,4 +1,30 @@
+---@class kayzels.utils
+---@field filter kayzels.utils.filter
+---@field format kayzels.utils.format
+---@field load kayzels.utils.load
+---@field lualine kayzels.utils.lualine
+---@field mini kayzels.utils.mini
+---@field plugin kayzels.utils.plugin
+---@field root kayzels.utils.root
+---@field theme kayzels.utils.theme
+---@field icons kayzels.icons
 local M = {}
+
+setmetatable(M, {
+  __index = function(t, k)
+    if k == "icons" then
+      t[k] = require("kayzels.icons")
+    else
+      t[k] = require("kayzels.utils." .. k)
+    end
+    return t[k]
+  end,
+})
+
+---@return boolean
+function M.is_win()
+  return vim.uv.os_uname().sysname:find("Windows") ~= nil
+end
 
 ---@param name string
 function M.get_plugin(name)
@@ -106,6 +132,7 @@ function M.lazy_notify()
   local check = assert(vim.uv.new_check())
 
   local replay = function()
+    ---@diagnostic disable-next-line: need-check-nil
     timer:stop()
     check:stop()
     if vim.notify == temp then
@@ -126,6 +153,7 @@ function M.lazy_notify()
   end)
 
   -- or if it took more than 500ms, then something went wrong
+  ---@diagnostic disable-next-line: need-check-nil
   timer:start(500, 0, replay)
 end
 

@@ -8,7 +8,7 @@ local LspKeys = require("kayzels.lsp.keys")
 local LspUtils = require("kayzels.lsp.util")
 
 function M._setup_diagnostics()
-  local icons = require("kayzels.icons").diagnostics
+  local icons = KyzVim.icons.diagnostics
   vim.diagnostic.config({
     underline = true,
     virtual_text = {
@@ -135,7 +135,7 @@ function M.setup()
   M._make_capabilities()
 
   -- setup autoformat
-  require("kayzels.utils.format").register(LspFormat.formatter())
+  KyzVim.format.register(LspFormat.formatter())
 
   M._attach_keys()
   M._inlay_hints()

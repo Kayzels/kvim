@@ -5,8 +5,8 @@ return {
     cmd = "ConformInfo",
     event = "BufWritePre",
     init = function()
-      require("kayzels.utils").on_very_lazy(function()
-        require("kayzels.utils.format").register({
+      KyzVim.on_very_lazy(function()
+        KyzVim.format.register({
           name = "conform.nvim",
           priority = 100,
           primary = true,

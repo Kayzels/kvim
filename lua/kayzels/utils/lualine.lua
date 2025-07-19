@@ -1,3 +1,4 @@
+---@class kayzels.utils.lualine
 local M = {}
 
 local norm = require("lazy.core.util").norm
@@ -53,8 +54,8 @@ function M.pretty_path(opts)
     end
 
     path = norm(path)
-    local root = require("kayzels.utils.root").get()
-    local cwd = require("kayzels.utils.root").cwd()
+    local root = KyzVim.root.get()
+    local cwd = KyzVim.root.cwd()
 
     if opts.relative == "cwd" and path:find(cwd, 1, true) == 1 then
       path = path:sub(#cwd + 2)
@@ -106,9 +107,8 @@ function M.root_dir(opts)
   }, opts or {})
 
   local function get()
-    local root_util = require("kayzels.utils.root")
-    local cwd = root_util.cwd()
-    local root = root_util.get()
+    local cwd = KyzVim.root.cwd()
+    local root = KyzVim.root.get()
     local name = vim.fs.basename(root)
 
     if root == cwd then

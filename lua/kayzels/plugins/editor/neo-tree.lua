@@ -6,14 +6,14 @@ return {
       {
         "<leader>fe",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("kayzels.utils.root").get() })
+          require("neo-tree.command").execute({ toggle = true, dir = KyzVim.root.get() })
         end,
         desc = "Explorer NeoTree (Root Dir)",
       },
       {
         "<leader>fE",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = require("kayzels.utils.root").cwd() })
+          require("neo-tree.command").execute({ toggle = true, dir = KyzVim.root.cwd() })
         end,
         desc = "Explorer NeoTree (cwd)",
       },

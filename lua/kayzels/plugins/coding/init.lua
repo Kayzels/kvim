@@ -16,7 +16,7 @@ return {
       markdown = true,
     },
     config = function(_, opts)
-      require("kayzels.utils.mini").pairs(opts)
+      KyzVim.mini.pairs(opts)
     end,
   },
   {
@@ -44,7 +44,7 @@ return {
             { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
             "^().*()$",
           },
-          g = require("kayzels.utils.mini").ai_buffer,
+          g = KyzVim.mini.ai_buffer,
           u = ai.gen_spec.function_call(), -- u for "Usage"
           U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
         },
@@ -52,11 +52,9 @@ return {
     end,
     config = function(_, opts)
       require("mini.ai").setup(opts)
-      local on_load = require("kayzels.utils").on_load
-
-      on_load("which-key.nvim", function()
+      KyzVim.on_load("which-key.nvim", function()
         vim.schedule(function()
-          require("kayzels.utils.mini").ai_whichkey(opts)
+          KyzVim.mini.ai_whichkey(opts)
         end)
       end)
     end,
@@ -71,6 +69,7 @@ return {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "snacks.nvim", words = { "Snacks" } },
+        { path = "KyzVim", words = { "KyzVim" } },
       },
     },
   },

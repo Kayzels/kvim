@@ -1,3 +1,4 @@
+---@class kayzels.utils.filter
 local M = {}
 
 ---@type table<string, string[]|boolean>?

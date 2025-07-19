@@ -94,7 +94,7 @@ return {
     },
     config = function(_, opts)
       if type(opts.ensure_installed == "table") then
-        opts.ensure_installed = require("kayzels.utils").dedup(opts.ensure_installed)
+        opts.ensure_installed = KyzVim.dedup(opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
@@ -104,9 +104,9 @@ return {
     event = "VeryLazy",
     enabled = true,
     config = function()
-      local utils = require("kayzels.utils")
-      if utils.is_loaded("nvim-treesitter") then
-        local opts = utils.opts("nvim-treesitter")
+      if KyzVim.is_loaded("nvim-treesitter") then
+        local opts = KyzVim.opts("nvim-treesitter")
+        ---@diagnostic disable-next-line: missing-fields
         require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
       end
 

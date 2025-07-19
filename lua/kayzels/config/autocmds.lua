@@ -3,12 +3,10 @@ local function augroup(name)
 end
 
 -- Change color schemes on background change
-local colorscheme_augroup = augroup("color_scheme")
-
 vim.api.nvim_create_autocmd("OptionSet", {
-  group = colorscheme_augroup,
+  group = augroup("color_scheme"),
   pattern = "background",
-  callback = require("kayzels.utils.theme").set_theme,
+  callback = KyzVim.theme.set_theme,
 })
 
 -- Check if we need to reload the file when it changed

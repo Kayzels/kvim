@@ -2,7 +2,7 @@ return {
   {
     "echasnovski/mini.surround",
     keys = function(_, keys)
-      local opts = require("kayzels.utils").opts("mini.surround")
+      local opts = KyzVim.opts("mini.surround")
       local mappings = {
         { opts.mappings.add, desc = "Add Surrounding", mode = { "n", "v" } },
         { opts.mappings.delete, desc = "Delete Surrounding" },

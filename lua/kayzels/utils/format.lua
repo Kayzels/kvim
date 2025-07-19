@@ -1,4 +1,10 @@
-local M = {}
+---@class kayzels.utils.format
+---@overload fun(opts?: { force?:boolean})
+local M = setmetatable({}, {
+  __call = function(m, ...)
+    return m.format(...)
+  end,
+})
 
 ---@class Formatter
 ---@field name string
@@ -9,8 +15,16 @@ local M = {}
 
 M.formatters = {} ---@type Formatter[]
 
+local registered_lsp = false
+
 ---@param formatter Formatter
 function M.register(formatter)
+  if formatter.name == "LSP" then
+    if registered_lsp then
+      return
+    end
+    registered_lsp = true
+  end
   M.formatters[#M.formatters + 1] = formatter
   table.sort(M.formatters, function(a, b)
     return a.priority > b.priority
@@ -18,7 +32,7 @@ function M.register(formatter)
 end
 
 function M.formatexpr()
-  if require("kayzels.utils").has("conform.nvim") then
+  if KyzVim.has("conform.nvim") then
     return require("conform").formatexpr()
   end
   return vim.lsp.formatexpr({ timeout_ms = 3000 })
