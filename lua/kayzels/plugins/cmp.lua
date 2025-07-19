@@ -1,5 +1,3 @@
---- TODO: Add friendly snippets?
-
 ---@diagnostic disable: missing-fields
 return {
   {
@@ -46,7 +44,7 @@ return {
               split_icon = {
                 ellipsis = false,
                 text = function(_)
-                  return "│"
+                  return " │"
                 end,
                 highlight = "BlinkCmpKindDefault",
               },
