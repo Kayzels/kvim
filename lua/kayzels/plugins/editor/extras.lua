@@ -42,13 +42,9 @@ return {
     end,
   },
   {
-    -- "smjonas/inc-rename.nvim",
-    -- NOTE: Using different branch for vim.ui.input support
-    "cameronr/inc-rename.nvim",
+    "smjonas/inc-rename.nvim",
     cmd = "IncRename",
-    opts = {
-      input_buffer_type = "snacks",
-    },
+    opts = {},
   },
   {
     "echasnovski/mini.move",
