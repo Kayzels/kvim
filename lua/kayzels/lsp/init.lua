@@ -7,20 +7,6 @@ local LspFormat = require("kayzels.lsp.format")
 local LspKeys = require("kayzels.lsp.keys")
 local LspUtils = require("kayzels.lsp.util")
 
-M.servers = {
-  "basedpyright",
-  "clangd",
-  "cssls",
-  "emmet_language_server",
-  "html",
-  "jsonls",
-  "lua_ls",
-  "marksman",
-  "qmlls6",
-  "ruff",
-  "vtsls",
-}
-
 function M._setup_diagnostics()
   local icons = require("kayzels.icons").diagnostics
   vim.diagnostic.config({
@@ -78,20 +64,16 @@ function M._make_capabilities()
 end
 
 function M._enable_servers()
-  local lsp_dir = vim.fn.stdpath("config") .. "/lsp"
+  local server_configs = vim
+    .iter(vim.api.nvim_get_runtime_file("lsp/*.lua", true))
+    :map(function(file)
+      return vim.fn.fnamemodify(file, ":t:r")
+    end)
+    :totable()
 
-  if vim.fn.isdirectory(lsp_dir) == 1 then
-    for _, file in ipairs(vim.fn.readdir(lsp_dir)) do
-      if file:match("%.lua$") and file ~= "init.lua" then
-        local server_name = file:gsub("%.lua$", "")
-        if not vim.tbl_contains(M.servers, server_name) then
-          table.insert(M.servers, server_name)
-        end
-      end
-    end
-  end
-
-  vim.lsp.enable(M.servers)
+  -- Call explicitly before enabling configs, to get commands
+  require("mason").setup()
+  vim.lsp.enable(server_configs)
 end
 
 function M._attach_keys()
@@ -126,22 +108,29 @@ end
 function M._setup_folds()
   vim.o.foldmethod = "expr"
   vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-  LspUtils.on_supports_method("textDocument/foldingRange", function(client, _)
+  LspUtils.on_supports_method("textDocument/foldingRange", function(_, _)
     local win = vim.api.nvim_get_current_win()
+    -- foldexpr is window local, not buffer local
     vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
   end)
 end
 
 --- Custom changes that should be made after on_attach for specific servers
 function M._modify_servers()
-  LspUtils.on_attach(function(client, buffer)
+  LspUtils.on_attach(function(client, _)
     if client.name == "ruff" then
       client.server_capabilities.hoverProvider = false
     end
   end, "ruff")
 end
 
+local did_setup = false
 function M.setup()
+  if did_setup then
+    return
+  end
+  did_setup = true
+
   M._setup_diagnostics()
   M._make_capabilities()
 
