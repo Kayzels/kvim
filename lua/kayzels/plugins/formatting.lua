@@ -1,9 +1,10 @@
 return {
   {
     "stevearc/conform.nvim",
+    dependencies = { "mason.nvim" },
     lazy = true,
     cmd = "ConformInfo",
-    event = "BufWritePre",
+    -- event = "BufWritePre",
     init = function()
       KyzVim.on_very_lazy(function()
         KyzVim.format.register({
@@ -28,6 +29,8 @@ return {
     opts = {
       default_format_opts = {
         timeout_ms = 3000,
+        async = false,
+        quiet = false,
         lsp_format = "fallback",
       },
       formatters_by_ft = {
@@ -37,24 +40,6 @@ return {
       formatters = {
         injected = { options = { ignore_errors = true } },
       },
-      -- format_on_save = function(bufnr)
-      --   local ignore_filetypes = {}
-      --   if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
-      --     return
-      --   end
-      --   -- Disable with a global or buffer local variable
-      --   if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-      --     return
-      --   end
-      --   return {
-      --     timeout_ms = 500,
-      --     lsp_format = "fallback",
-      --   }
-      -- end,
-      -- format_on_save = {
-      --   timeout_ms = 500,
-      --   lsp_format = "fallback",
-      -- },
     },
     keys = {
       {
