@@ -29,6 +29,7 @@ return {
               desc = "Find Text",
               action = ":lua Snacks.dashboard.pick('live_grep')",
             },
+            { icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.projects()" },
             {
               icon = " ",
               key = "r",
