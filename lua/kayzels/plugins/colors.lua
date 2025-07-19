@@ -73,6 +73,7 @@ return {
         variables = {},
       },
       lualine_bold = true,
+      transparent = true,
       on_colors = function(colors)
         local git_add = colors.green
         local git_change = colors.blue1
@@ -112,6 +113,7 @@ return {
         hl.TabLineFill = "NONE"
         hl.BlinkCmpMenuSelection = hl.PmenuSel
         hl.BlinkCmpScrollBarThumb = hl.PmenuThumb
+        hl.YaziFloat = hl.NormalFloat
       end,
     },
   },
