@@ -2,9 +2,15 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    cmd = {
+      "Copilot",
+      "CodeCompanion",
+      "CodeCompanionChat",
+      "CodeCompanionCmd",
+      "CodeCompanionActions",
+    },
     build = ":Copilot auth",
-    event = "BufReadPost",
+    -- event = "BufReadPost",
     dependencies = {
       "folke/snacks.nvim",
     },
