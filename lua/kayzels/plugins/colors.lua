@@ -7,7 +7,7 @@ return {
     ---@module 'catppuccin'
     ---@type CatppuccinOptions
     opts = {
-      transparent_background = false,
+      transparent_background = true,
       styles = {
         comments = { "italic" },
         conditionals = {},
@@ -16,15 +16,27 @@ return {
       },
       custom_highlights = function(colors)
         local groups = {
-          cmpGhostText = { fg = colors.surface0 },
+          LspReferenceText = { bg = colors.surface0 },
+          LspReferenceRead = { bg = colors.surface0 },
+          LspReferenceWrite = { bg = colors.surface0 },
+          --- This has the bg set because that makes it easier to differentiate
+          --- and also allows it to be used in cmdline
+          --- without the ghost text being impossible to read.
+          --- The earlier value of colors.surface0 for the fg worked
+          --- because it was automatically highlighted in the background
+          --- because of Snacks.words, which uses the LspReference hihglighting.
+          cmpGhostText = { fg = colors.overlay0, bg = colors.surface0 },
           BlinkCmpMenuSelection = { link = "PmenuSel" },
-          -- BlinkCmpMenu = { link = "Normal" },
-          -- BlinkCmpMenuBorder = { bg = colors.none, fg = colors.text },
-          BlinkCmpGhostText = { fg = colors.surface0 },
+          BlinkCmpGhostText = { link = "cmpGhostText" },
           Folded = { fg = colors.blue, bg = colors.surface0 },
           Comment = { fg = colors.overlay0, style = { "italic" } },
           YankyPut = { link = "Search" },
           YankyYanked = { link = "IncSearch" },
+          NormalFloat = { bg = colors.mantle, fg = colors.text },
+          FloatBorder = { fg = colors.blue, bg = colors.mantle },
+          YaziFloat = { link = "NormalFloat" },
+          NeoTreeNormal = { fg = colors.text, bg = colors.mantle },
+          NeoTreeNormalNC = { fg = colors.text, bg = colors.mantle },
         }
         return groups
       end,
