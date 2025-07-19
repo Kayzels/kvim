@@ -113,3 +113,7 @@ vim.g.root_lsp_ignore = { "copilot" }
 
 -- Enable autoformatting
 vim.g.autoformat = true
+
+-- Show the current document symbol from Trouble in lualine
+-- Can be disabled for a buffer by setting `vim.b.trouble_lualine = false`
+vim.g.trouble_lualine = true
