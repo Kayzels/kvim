@@ -78,6 +78,7 @@ return {
   },
   {
     "tiagovla/scope.nvim",
+    event = "LazyFile",
     opts = {},
   },
 }

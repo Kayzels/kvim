@@ -49,6 +49,7 @@ return {
   },
   {
     "echasnovski/mini.hipatterns",
+    event = "LazyFile",
     opts = function()
       local hi = require("mini.hipatterns")
       return {
@@ -66,9 +67,6 @@ return {
           },
         },
       }
-    end,
-    config = function(_, opts)
-      require("mini.hipatterns").setup(opts)
     end,
   },
   {
