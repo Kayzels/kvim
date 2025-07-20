@@ -2,7 +2,20 @@ _G.KyzVim = require("kayzels.utils")
 
 local M = {}
 
+---Make all keymaps silent by default
+local function override_keymap_set()
+  local keymap_set = vim.keymap.set
+
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.keymap.set = function(mode, lhs, rhs, opts)
+    opts = opts or {}
+    opts.silent = opts.silent ~= false
+    return keymap_set(mode, lhs, rhs, opts)
+  end
+end
+
 function M.setup()
+  override_keymap_set()
   require("kayzels.config.options")
   require("kayzels.lazy")
   require("kayzels.config.autocmds")
