@@ -20,14 +20,8 @@ local lazy_color = KTheme.theme_for_mode[KTheme.mode_on_open]
 require("lazy").setup({
   spec = {
     { import = "kayzels.plugins" },
-    { import = "kayzels.plugins.ui" },
-    { import = "kayzels.plugins.coding" },
-    { import = "kayzels.plugins.editor" },
-    { import = "kayzels.plugins.lang.json" },
-    { import = "kayzels.plugins.lang.markdown" },
-    { import = "kayzels.plugins.lang.python" },
-    { import = "kayzels.plugins.ai.codecompanion" },
-    { import = "kayzels.plugins.ai.copilot" },
+    -- needs to be separate, to ensure proper order for lualine
+    { import = "kayzels.plugins.extras" },
   },
   rocks = {
     enabled = false,

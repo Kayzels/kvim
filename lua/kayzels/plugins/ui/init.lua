@@ -1,4 +1,4 @@
-return {
+local M = {
   {
     -- NOTE: Use own package due to issue with winborder and scrollbar
     "Kayzels/noice.nvim",
@@ -182,3 +182,8 @@ return {
     },
   },
 }
+
+local names = { "dashboard", "lualine", "extras" }
+KyzVim.plugin.extend_spec(M, "ui", names)
+
+return M

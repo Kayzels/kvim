@@ -1,4 +1,4 @@
-return {
+local M = {
   {
     "echasnovski/mini.pairs",
     event = "VeryLazy",
@@ -73,3 +73,8 @@ return {
     },
   },
 }
+
+local names = { "extras", "textcase" }
+KyzVim.plugin.extend_spec(M, "coding", names)
+
+return M

@@ -1,4 +1,4 @@
-return {
+local M = {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -232,3 +232,8 @@ return {
     },
   },
 }
+
+local names = { "dial", "extras", "neo-tree" }
+KyzVim.plugin.extend_spec(M, "editor", names)
+
+return M
