@@ -5,6 +5,7 @@ local M = {}
 M.mode_on_open = "light"
 local first_call = true
 
+---@type { dark: string, light: string}
 M.theme_for_mode = {
   light = "catppuccin",
   dark = "tokyonight",

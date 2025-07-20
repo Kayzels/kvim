@@ -37,6 +37,11 @@ return {
           YaziFloat = { link = "NormalFloat" },
           NeoTreeNormal = { fg = colors.text, bg = colors.mantle },
           NeoTreeNormalNC = { fg = colors.text, bg = colors.mantle },
+          ["@variable.builtin"] = { fg = colors.red, style = { "italic" } },
+          ["@lsp.mod.global"] = { link = "@variable.builtin" },
+          ["@lsp.typemod.variable.global"] = { link = "@variable.builtin" },
+          CursorLine = { bg = colors.crust },
+          WinSeparator = { fg = colors.overlay0 },
         }
         return groups
       end,
@@ -63,7 +68,10 @@ return {
         notify = true,
         render_markdown = true,
         semantic_tokens = true,
-        snacks = true,
+        snacks = {
+          enabled = true,
+          indent_scope_color = "lavender",
+        },
         treesitter = true,
         treesitter_context = true,
         which_key = true,
@@ -126,6 +134,9 @@ return {
         hl.BlinkCmpMenuSelection = hl.PmenuSel
         hl.BlinkCmpScrollBarThumb = hl.PmenuThumb
         hl.YaziFloat = hl.NormalFloat
+        hl["@variable.builtin"] = { fg = c.red, italic = true }
+        hl["@lsp.mod.global"] = hl["@variable.builtin"]
+        hl["@lsp.typemod.variable.global"] = hl["@variable.builtin"]
       end,
     },
   },
