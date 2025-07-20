@@ -46,8 +46,8 @@ opt.listchars = {
   tab = "-->",
   trail = "•",
   nbsp = "␣",
-  extends = "▶",
-  precedes = "◀",
+  extends = "",
+  precedes = "",
 }
 opt.mouse = "a"
 opt.nrformats = "bin,hex,blank"
