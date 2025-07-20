@@ -56,13 +56,22 @@ return {
     dependencies = {
       { "nvim-lua/plenary.nvim", lazy = true },
     },
+    cmd = {
+      "Yazi",
+      "Yazi cwd",
+      "Yazi toggle",
+    },
     keys = {
       {
-        "<leader>y",
-        function()
-          require("yazi").yazi()
-        end,
-        desc = "Explorer Yazi",
+        "<leader>e",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Explorer Yazi (Root Dir)",
+      },
+      {
+        "<leader>E",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Explorer Yazi (cwd)",
       },
     },
     opts = {},
