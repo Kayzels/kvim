@@ -8,6 +8,7 @@
 ---@field root kayzels.utils.root
 ---@field theme kayzels.utils.theme
 ---@field icons kayzels.icons
+---@field tabout kayzels.utils.tabout
 local M = {}
 
 setmetatable(M, {

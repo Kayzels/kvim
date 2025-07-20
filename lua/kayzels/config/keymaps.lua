@@ -242,3 +242,8 @@ Snacks.toggle({
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank into clipboard" })
 map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from clipboard (after cursor)" })
 map({ "n", "v" }, "<leader>p", '"+P', { desc = "Paste from clipboard (before cursor)" })
+
+-- stylua: ignore start
+-- Manually make mappings for tab out, instead of using plugin
+map("i", "<c-l>", function() KyzVim.tabout() end)
+map("i", "<c-h>", function() KyzVim.tabout({ reverse = true }) end)
