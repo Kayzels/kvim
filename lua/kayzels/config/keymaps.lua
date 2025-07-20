@@ -208,11 +208,13 @@ map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+-- stylua: ignore end
+
 --Use U for redo
-vim.keymap.set("n", "U", "<cmd>redo<cr>", { silent = true, desc = "Redo" })
+map("n", "U", "<cmd>redo<cr>", { silent = true, desc = "Redo" })
 
 -- Yank line on `dd` only if not empty
-vim.keymap.set("n", "dd", function()
+map("n", "dd", function()
   if vim.fn.getline("."):match("^%s*$") then
     return '"_dd'
   end
@@ -220,7 +222,7 @@ vim.keymap.set("n", "dd", function()
 end, { expr = true })
 
 -- Stop going to new line if enter pressed at end of command (example with <C-S> for save)
-vim.keymap.set("n", "<CR>", "<Nop>")
+map("n", "<CR>", "<Nop>")
 
 -- Toggle winbar
 Snacks.toggle({
@@ -235,3 +237,8 @@ Snacks.toggle({
     })
   end,
 }):map("<leader>uv")
+
+-- Yank into system clipboard (because pressing shift+" and then shift and + is tedious; but I don't want to always copy/paste from clipboard)
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank into clipboard" })
+map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from clipboard (after cursor)" })
+map({ "n", "v" }, "<leader>p", '"+P', { desc = "Paste from clipboard (before cursor)" })
