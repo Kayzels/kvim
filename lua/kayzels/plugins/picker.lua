@@ -1,4 +1,3 @@
--- TODO: Snacks picker add way to do horizontal split with C-x
 return {
   {
     "folke/snacks.nvim",
@@ -34,6 +33,8 @@ return {
         },
       },
     },
+    -- NOTE: Not using <c-x> for horizontal split, as it can be used to delete buffers
+    -- in the buffers picker. Instead, use <c-s>
     -- stylua: ignore
     keys = {
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
