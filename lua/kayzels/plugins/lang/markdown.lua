@@ -1,3 +1,5 @@
+local HOME = os.getenv("HOME")
+
 return {
   {
     "conform.nvim",
@@ -26,14 +28,24 @@ return {
       },
       formatters_by_ft = {
         ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
+        ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
       },
     },
   },
   {
-    "nvim-lint",
+    "mfussenegger/nvim-lint",
     opts = {
       linters_by_ft = {
         markdown = { "markdownlint-cli2" },
+      },
+      linters = {
+        ["markdownlint-cli2"] = {
+          args = {
+            "--config",
+            HOME .. "./markdownlint-cli2.yaml",
+            "--",
+          },
+        },
       },
     },
   },
