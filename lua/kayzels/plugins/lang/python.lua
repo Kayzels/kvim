@@ -21,7 +21,8 @@ return {
     },
     -- NOTE: Not sure if this is needed. Has issues if venv automatically selected.
     config = function()
-      require("dap-python").setup(KyzVim.get_pkg_path("debugpy", "/venv/bin/python"))
+      -- require("dap-python").setup(KyzVim.get_pkg_path("debugpy", "/venv/bin/python"))
+      require("dap-python").setup("debugpy-adapter")
     end,
   },
   {
