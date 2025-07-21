@@ -87,7 +87,6 @@ return {
       {
         "<leader>sy",
         function()
-          -- Snacks.picker.yanky()
           Snacks.picker.pick("yanky")
         end,
         mode = { "n", "x" },
