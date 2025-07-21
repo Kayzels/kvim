@@ -42,7 +42,7 @@ return {
         ["markdownlint-cli2"] = {
           args = {
             "--config",
-            HOME .. "./markdownlint-cli2.yaml",
+            HOME .. "/.markdownlint-cli2.yaml",
             "--",
           },
         },
