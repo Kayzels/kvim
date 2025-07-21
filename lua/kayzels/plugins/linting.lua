@@ -67,6 +67,7 @@ return {
           if not linter then
             vim.notify("Linter not found: " .. name, vim.log.levels.WARN, { title = "nvim-lint" })
           end
+          ---@diagnostic disable-next-line: undefined-field
           return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
         end, names)
 

@@ -23,6 +23,7 @@ function M.set_theme()
     mode = M.mode_on_open
     first_call = false
   else
+    ---@diagnostic disable-next-line: undefined-field
     mode = vim.opt.background:get()
   end
 
