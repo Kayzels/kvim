@@ -25,7 +25,7 @@ function M.tabout(opts)
   local forward_pattern = "[})\\]\"'>`]"
   local forward_flags = "cnz" -- c: include current, n: don't go to match, z: start at cursor
 
-  local backward_pattern = "[{}()\\[\\]\"'<>`]"
+  local backward_pattern = "[{}()\\[\\]\"'<>`,]"
   local backward_flags = "b" -- b: backwards
 
   local pattern = reverse and backward_pattern or forward_pattern
