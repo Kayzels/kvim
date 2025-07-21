@@ -92,6 +92,7 @@ opt.splitright = true -- Put new window to the right of current, rather than lef
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true
 opt.tildeop = true -- Use tilde as operator instead of just per character
+opt.timeoutlen = vim.g.vscode and 1000 or 200 -- Lower than default to quickly trigger which-key
 opt.undofile = true
 opt.undolevels = 10000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold

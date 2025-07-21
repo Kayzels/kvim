@@ -12,6 +12,8 @@
 local M = {}
 
 setmetatable(M, {
+  ---@param t table<string, any>
+  ---@param k string
   __index = function(t, k)
     if k == "icons" then
       t[k] = require("kayzels.icons")

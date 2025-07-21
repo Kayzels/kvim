@@ -48,19 +48,4 @@ return {
       { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" },
     },
   },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     setup = {
-  --       ruff = function(server_name, _)
-  --         require("kayzels.utils.lsp").on_attach(function(client, _)
-  --           -- Disable hover in favor of Pyright
-  --           if client.name == server_name then
-  --             client.server_capabilities.hoverProvider = false
-  --           end
-  --         end)
-  --       end,
-  --     },
-  --   },
-  -- },
 }
