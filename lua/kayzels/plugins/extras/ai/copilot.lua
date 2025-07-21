@@ -25,27 +25,27 @@ return {
         help = true,
       },
     },
+    keys = {
+      -- Copilot is disabled by default, this calls the toggle function
+      {
+        "<leader>at",
+        desc = "Enable Copilot",
+      },
+    },
     config = function(_, opts)
-      -- Stop the warning that copilot is disabled
-      vim.schedule(function()
-        local ok, logger = pcall(require, "copilot.logger")
-        if ok then
-          local orig_warn = logger.warn
-          logger.warn = function(msg, ...)
-            if msg:find("copilot is disabled", 1, true) then
-              return
-            end
-            orig_warn(msg, ...)
-          end
-        end
-      end)
-
       require("copilot").setup(opts)
 
-      -- local snacks = require("snacks")
+      -- `is_disabled` incorrectly returns false for the first one,
+      -- when it should be true.
+      -- To resolve that, treat the first call differently.
+      local first_call = true
       Snacks.toggle({
         name = "Copilot",
         get = function()
+          if first_call then
+            first_call = false
+            return false
+          end
           return not require("copilot.client").is_disabled()
         end,
         set = function(state)
@@ -56,9 +56,6 @@ return {
           end
         end,
       }):map("<leader>at")
-      vim.cmd("silent! Copilot disable")
-      -- TODO: Technically, I only want to disable completion, not Copilot entirely.
-      -- Otherwise it might need to be manually enabled before using CodeCompanion chat with it.
     end,
   },
   {
