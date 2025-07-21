@@ -5,36 +5,43 @@
 ---@field desc string
 
 ---@param opts TextCaseMapping
+---@return LazyKeysSpec[]
 local function set_mapping(opts)
   local key = opts.key
   local case = opts.case
   local lsp = opts.lsp
   local desc = opts.desc
+  local textcase = require("textcase")
+
+  ---@type LazyKeysSpec
   local n_mode = {
     "ga" .. key,
     function()
-      require("textcase").current_word(case)
+      textcase.current_word(case)
     end,
     desc = "Convert " .. desc,
   }
+  ---@type LazyKeysSpec
   local lsp_mode = {
     "ga" .. lsp,
     function()
-      require("textcase").lsp_rename(case)
+      textcase.lsp_rename(case)
     end,
     desc = "LSP rename " .. desc,
   }
+  ---@type LazyKeysSpec
   local op_mode = {
     "gao" .. key,
     function()
-      require("textcase").operator(case)
+      textcase.operator(case)
     end,
     desc = desc,
   }
+  ---@type LazyKeysSpec
   local x_mode = {
     "ga" .. key,
     function()
-      require("textcase").operator(case)
+      textcase.operator(case)
     end,
     desc = "Convert " .. desc,
     mode = { "x" },
@@ -42,10 +49,12 @@ local function set_mapping(opts)
   return { n_mode, lsp_mode, op_mode, x_mode }
 end
 
+---@return LazyKeysSpec[]
 local function set_text_case_mappings()
   if not vim.g.vscode then
-    require("which-key").add({ "ga", group = "Text Case" })
-    require("which-key").add({ "gao", group = "Pending Mode Operator" })
+    local wk = require("which-key")
+    wk.add({ "ga", group = "Text Case" })
+    wk.add({ "gao", group = "Pending Mode Operator" })
   end
   ---@type TextCaseMapping[]
   local defs = {
@@ -62,6 +71,7 @@ local function set_text_case_mappings()
     { key = "f", case = "to_phrase_case", lsp = "F", desc = "To phrase case" },
   }
 
+  ---@type LazyKeysSpec[]
   local mappings = {}
   for _, def in ipairs(defs) do
     local mapping = set_mapping(def)
