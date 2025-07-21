@@ -94,5 +94,6 @@ return {
     },
     keys = set_text_case_mappings,
     cmd = { "Subs" },
+    vscode = true,
   },
 }
