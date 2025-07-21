@@ -110,6 +110,13 @@ function M.pairs(opts)
       return "`\n```" .. vim.api.nvim_replace_termcodes("<up>", true, true, true)
     end
 
+    --- Python triple quotes
+    if opts.python and vim.bo.filetype == "python" then
+      if (before:match('""') and o == '"') or (before:match("''") and o == "'") then
+        return o .. o .. o .. o .. vim.api.nvim_replace_termcodes("<left><left><left>", true, true, true)
+      end
+    end
+
     -- Skip autopair if matching one of the nodes
     if opts.skip_next and next ~= "" and next:match(opts.skip_next) then
       return o

@@ -13,6 +13,8 @@ local M = {
       skip_unbalanced = false,
       -- better deal with markdown code blocks
       markdown = true,
+      -- better deal with python docstrings and triple quotes
+      python = true,
     },
     config = function(_, opts)
       KyzVim.mini.pairs(opts)
