@@ -2,6 +2,10 @@
 return {
   {
     "saghen/blink.cmp",
+    opts_extend = {
+      "sources.completion.enabled_providers",
+      "sources.default",
+    },
     version = "1.*",
     event = "InsertEnter",
     dependencies = {
@@ -66,9 +70,6 @@ return {
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 200,
-          window = {
-            border = "rounded",
-          },
         },
         ghost_text = { enabled = true },
       },
@@ -80,18 +81,13 @@ return {
       --   enabled = true
       -- },
       sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
           lsp = {
             fallbacks = {},
           },
           buffer = {
             score_offset = -10,
-          },
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            score_offset = 100,
           },
         },
       },
@@ -103,19 +99,19 @@ return {
       },
     },
   },
-  -- {
-  --   "saghen/blink.cmp",
-  --   opts = {
-  --     sources = {
-  --       default = { "lazydev" },
-  --       providers = {
-  --         lazydev = {
-  --           name = "LazyDev",
-  --           module = "lazydev.integrations.blink",
-  --           score_offset = 100
-  --         }
-  --       }
-  --     }
-  --   }
-  -- }
+  {
+    "saghen/blink.cmp",
+    opts = {
+      sources = {
+        default = { "lazydev" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
+        },
+      },
+    },
+  },
 }
