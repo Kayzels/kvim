@@ -175,3 +175,13 @@ vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile", "BufReadPost" }, {
     })
   end,
 })
+
+-- Zip files (and related) don't trigger the other events, so explicitly call
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "zip",
+  callback = function()
+    vim.api.nvim_exec_autocmds("User", {
+      pattern = "KyzLspSetup",
+    })
+  end,
+})

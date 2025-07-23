@@ -39,7 +39,7 @@ require("lazy").setup({
         "tarPlugin",
         "tohtml",
         "tutor",
-        "zipPlugin",
+        -- "zipPlugin", -- enabling this so that epub files can be opened
       },
     },
   },
