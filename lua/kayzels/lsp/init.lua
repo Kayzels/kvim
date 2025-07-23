@@ -125,6 +125,12 @@ function M._modify_servers()
 end
 
 local did_setup = false
+
+---@return boolean
+function M.state()
+  return did_setup
+end
+
 function M.setup()
   if did_setup then
     return
