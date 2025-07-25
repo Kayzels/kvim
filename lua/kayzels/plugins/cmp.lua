@@ -6,7 +6,8 @@ return {
       "sources.completion.enabled_providers",
       "sources.default",
     },
-    version = "1.*",
+    build = "rustup run nightly cargo build --release",
+    version = "*",
     event = "InsertEnter",
     dependencies = {
       "rafamadriz/friendly-snippets",
