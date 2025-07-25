@@ -22,6 +22,7 @@ function M.setup()
   require("kayzels.config.keymaps")
 
   KyzVim.format.setup()
+  KyzVim.root.setup()
 end
 
 M.did_init = false
