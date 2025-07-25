@@ -100,7 +100,7 @@ return {
           if state then
             m.enable()
           else
-            m.disble()
+            m.disable()
           end
         end,
       }):map("<leader>um")
