@@ -138,7 +138,7 @@ function M.info()
   local first = true
   for _, root in ipairs(roots) do
     for _, path in ipairs(root.paths) do
-      lines[#lines + 1] = ("-[%s] `%s` **(%s)**"):format(
+      lines[#lines + 1] = ("- [%s] `%s` **(%s)**"):format(
         first and "x" or " ",
         path,
         type(root.spec) == "table" and table.concat(root.spec, ", ") or root.spec
@@ -149,7 +149,7 @@ function M.info()
   lines[#lines + 1] = "```lua"
   lines[#lines + 1] = "vim.g.root_spec = " .. vim.inspect(spec)
   lines[#lines + 1] = "```"
-  vim.notify(lines, vim.log.levels.INFO, { title = "Roots" })
+  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "Roots" })
   return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
