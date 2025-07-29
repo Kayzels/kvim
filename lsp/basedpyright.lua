@@ -39,6 +39,7 @@ return {
           reportPrivateUsage = "none",
           reportUnusedCallResult = "none",
           reportAny = "none",
+          reportExplicitAny = "none",
           reportUninitializedInstanceVariable = "none",
           reportUnusedVariable = "none",
         },
