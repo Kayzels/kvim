@@ -59,6 +59,9 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+--- Setting to a very high value, so it stops showing before I wany.
+vim.o.cmdheight = 99
+
 return {
   {
     "snacks.nvim",
@@ -69,6 +72,7 @@ return {
       dashboard = { enabled = false },
       indent = { enabled = false },
       input = { enabled = false },
+      lazygit = { enabled = false },
       notifier = { enabled = false },
       picker = { enabled = false },
       quickfile = { enabled = false },

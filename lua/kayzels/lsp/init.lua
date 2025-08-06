@@ -54,7 +54,7 @@ function M._make_capabilities()
     "force",
     {},
     vim.lsp.protocol.make_client_capabilities(),
-    require("blink.cmp").get_lsp_capabilities(),
+    not vim.g.vscode and require("blink.cmp").get_lsp_capabilities() or {},
     custom_capabilities
   )
 
@@ -72,7 +72,9 @@ function M._enable_servers()
     :totable()
 
   -- Call explicitly before enabling configs, to get commands
-  require("mason").setup()
+  if not vim.g.vscode then
+    require("mason").setup()
+  end
   vim.lsp.enable(server_configs)
 end
 
@@ -159,15 +161,17 @@ function M.setup()
   vim.lsp.buf.type_definition = Snacks.picker.lsp_type_definitions
 
   -- Add mappings to which-key for defaults
-  local wk = require("which-key")
-  wk.add({
-    { "gr", group = "LSP Go To" },
-    { "gra", desc = "Code actions" },
-    { "gri", desc = "Go to Implementation" },
-    { "grn", desc = "Rename" },
-    { "grr", desc = "References" },
-    { "grt", desc = "Go to Type Definition" },
-  })
+  if not vim.g.vscode then
+    local wk = require("which-key")
+    wk.add({
+      { "gr", group = "LSP Go To" },
+      { "gra", desc = "Code actions" },
+      { "gri", desc = "Go to Implementation" },
+      { "grn", desc = "Rename" },
+      { "grr", desc = "References" },
+      { "grt", desc = "Go to Type Definition" },
+    })
+  end
 end
 
 return M

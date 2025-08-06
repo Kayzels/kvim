@@ -2,12 +2,14 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("kyzvim_" .. name, { clear = true })
 end
 
--- Change color schemes on background change
-vim.api.nvim_create_autocmd("OptionSet", {
-  group = augroup("color_scheme"),
-  pattern = "background",
-  callback = KyzVim.theme.set_theme,
-})
+if not vim.g.vscode then
+  -- Change color schemes on background change
+  vim.api.nvim_create_autocmd("OptionSet", {
+    group = augroup("color_scheme"),
+    pattern = "background",
+    callback = KyzVim.theme.set_theme,
+  })
+end
 
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
