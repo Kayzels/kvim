@@ -14,7 +14,12 @@ return {
         keywords = {},
         functions = { "bold" },
       },
+      float = {
+        transparent = false,
+        solid = false,
+      },
       custom_highlights = function(colors)
+        local cat_opts = require("catppuccin").options
         local groups = {
           LspReferenceText = { bg = colors.surface0 },
           LspReferenceRead = { bg = colors.surface0 },
@@ -26,27 +31,40 @@ return {
           --- because it was automatically highlighted in the background
           --- because of Snacks.words, which uses the LspReference hihglighting.
           cmpGhostText = { fg = colors.overlay0, bg = colors.surface0 },
-          BlinkCmpMenuSelection = { link = "PmenuSel" },
           BlinkCmpGhostText = { link = "cmpGhostText" },
           Folded = { fg = colors.blue, bg = colors.surface0 },
-          Comment = { fg = colors.overlay0, style = { "italic" } },
+          Comment = { fg = colors.overlay0, style = cat_opts.styles.comments },
           YankyPut = { link = "Search" },
           YankyYanked = { link = "IncSearch" },
-          NormalFloat = { bg = colors.mantle, fg = colors.text },
-          FloatBorder = { fg = colors.blue, bg = colors.mantle },
           YaziFloat = { link = "NormalFloat" },
-          NeoTreeNormal = { fg = colors.text, bg = colors.mantle },
-          NeoTreeNormalNC = { fg = colors.text, bg = colors.mantle },
           ["@variable.builtin"] = { fg = colors.red, style = { "italic" } },
           ["@lsp.mod.global"] = { link = "@variable.builtin" },
           ["@lsp.typemod.variable.global"] = { link = "@variable.builtin" },
           CursorLine = { bg = colors.crust },
           WinSeparator = { fg = colors.overlay0 },
+
+          -- Old colors that have been replaced
+          ["@variable.member"] = { fg = colors.lavender },
+          ["@module"] = { fg = colors.lavender, style = cat_opts.styles.miscs or { "italic" } },
+          ["@string.special.url"] = { fg = colors.teal, style = { "italic", "underline" } },
+          ["@markup.link.url"] = { fg = colors.teal, style = { "italic", "underline" } },
+          ["@type.builtin"] = { fg = colors.yellow, style = cat_opts.styles.properties or { "italic" } },
+          ["@property"] = { fg = colors.lavender, style = cat_opts.styles.properties or {} },
+          ["@constructor"] = { fg = colors.sapphire },
+          ["@tag"] = { fg = colors.mauve },
+          ["@tag.attribute"] = { fg = colors.teal, style = cat_opts.styles.miscs or { "italic" } },
+          ["@tag.delimiter"] = { fg = colors.sky },
+          ["@property.css"] = { fg = colors.lavender },
+          ["@property.id.css"] = { fg = colors.blue },
+          ["@type.tag.css"] = { fg = colors.mauve },
+          ["@markup.raw"] = { fg = colors.teal },
         }
         return groups
       end,
       integrations = {
-        blink_cmp = true,
+        blink_cmp = {
+          style = "bordered",
+        },
         cmp = true,
         flash = true,
         gitsigns = true,
