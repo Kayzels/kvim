@@ -9,6 +9,7 @@
 ---@field theme kayzels.utils.theme
 ---@field icons kayzels.icons
 ---@field tabout kayzels.utils.tabout
+---@field markdown kayzels.utils.markdown
 local M = {}
 
 setmetatable(M, {

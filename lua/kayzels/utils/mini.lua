@@ -106,7 +106,12 @@ function M.pairs(opts)
     local before = line:sub(1, cursor[2])
 
     --- Markdown codeblocks
-    if opts.markdown and o == "`" and vim.bo.filetype == "markdown" and before:match("^%s*``") then
+    if
+      opts.markdown
+      and o == "`"
+      and vim.tbl_contains(KyzVim.markdown.filetypes, vim.bo.filetype)
+      and before:match("^%s*``")
+    then
       return "`\n```" .. vim.api.nvim_replace_termcodes("<up>", true, true, true)
     end
 
@@ -117,7 +122,7 @@ function M.pairs(opts)
       end
     end
 
-    -- Skip autopair if matching one of the nodes
+    -- Skip autopair if matching one of these
     if opts.skip_next and next ~= "" and next:match(opts.skip_next) then
       return o
     end

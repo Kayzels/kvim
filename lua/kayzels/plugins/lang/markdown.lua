@@ -87,7 +87,7 @@ return {
         preset = "round",
       },
     },
-    ft = { "markdown", "norg", "rmd", "org", "codecompanion", "Avante" },
+    ft = KyzVim.markdown.filetypes,
     config = function(_, opts)
       require("render-markdown").setup(opts)
       Snacks.toggle({
