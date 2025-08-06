@@ -107,9 +107,10 @@ opt.wrap = false
 
 -- Disable unused providers (neater checkhealth)
 vim.g.loaded_node_provider = 0
-vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
+
+vim.g.python3_host_prog = "~/projects/nvim-plugins/nvim-venv/bin/python3"
 
 -- Disable LSPs being used for roots
 vim.g.root_lsp_ignore = { "copilot" }
