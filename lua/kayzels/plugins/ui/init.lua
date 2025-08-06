@@ -135,6 +135,7 @@ local M = {
     end,
   },
   { "MunifTanjim/nui.nvim", lazy = true },
+  { "grapp-dev/nui-components.nvim", dependencies = { "MunifTanjim/nui.nvim" }, lazy = true },
   {
     "folke/snacks.nvim",
     ---@module 'snacks'
