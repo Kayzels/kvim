@@ -20,7 +20,8 @@ return {
         enable = true,
       },
       completion = {
-        callSnippet = "Replace",
+        -- callSnippet = "Replace",
+        callSnippet = "Both",
       },
       doc = {
         privateName = { "^_" },
