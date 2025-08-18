@@ -35,7 +35,7 @@ return {
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "black", lsp_format = "fallback" },
+        python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
       },
       formatters = {
         injected = { options = { ignore_errors = true } },
