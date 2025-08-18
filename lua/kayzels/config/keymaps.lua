@@ -46,7 +46,7 @@ map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 -- Clear search and stop snippet on escape
 map({ "i", "n", "s" }, "<esc>", function()
   vim.cmd("noh")
-  -- LazyVim.cmp.actions.snippet_stop()
+  -- TODO: LazyVim.cmp.actions.snippet_stop()
   return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
@@ -220,9 +220,6 @@ map("n", "dd", function()
   end
   return "dd"
 end, { expr = true })
-
--- Stop going to new line if enter pressed at end of command (example with <C-S> for save)
-map("n", "<CR>", "<Nop>")
 
 -- Toggle winbar
 Snacks.toggle({
