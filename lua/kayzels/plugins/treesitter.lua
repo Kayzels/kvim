@@ -97,6 +97,7 @@ return {
         opts.ensure_installed = KyzVim.dedup(opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
+      vim.treesitter.language.register("html", { "xhtml" })
     end,
   },
   {

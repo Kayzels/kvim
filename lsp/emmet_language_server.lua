@@ -5,6 +5,7 @@ return {
     "css",
     "eruby",
     "html",
+    "xhtml",
     "htmlangular",
     "htmldjango",
     "javascriptreact",
