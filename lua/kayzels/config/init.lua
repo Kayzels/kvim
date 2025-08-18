@@ -23,6 +23,7 @@ function M.setup()
 
   KyzVim.format.setup()
   KyzVim.root.setup()
+  KyzVim.theme.setup()
 end
 
 M.did_init = false
