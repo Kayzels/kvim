@@ -48,4 +48,18 @@ return {
       { "<leader>cv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv", ft = "python" },
     },
   },
+  {
+    "Davidyz/inlayhint-filler.nvim",
+    opts = {},
+    keys = {
+      {
+        "<leader>ci",
+        function()
+          require("inlayhint-filler").fill()
+        end,
+        desc = "Insert inlay-hint",
+        mode = { "n", "v" },
+      },
+    },
+  },
 }
