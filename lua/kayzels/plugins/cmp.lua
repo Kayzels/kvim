@@ -75,12 +75,14 @@ return {
         ghost_text = { enabled = true },
       },
       signature = {
+        -- Disabled because it leads to duplicates with Noice.
         enabled = false,
-        -- enabled = true
       },
-      -- cmdline = {
-      --   enabled = true
-      -- },
+      cmdline = {
+        enabled = true,
+        keymap = { preset = "inherit" },
+        completion = { menu = { auto_show = true } },
+      },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
         providers = {
