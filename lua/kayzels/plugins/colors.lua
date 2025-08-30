@@ -7,7 +7,7 @@ return {
     ---@module 'catppuccin'
     ---@type CatppuccinOptions
     opts = {
-      transparent_background = true,
+      transparent_background = false,
       styles = {
         comments = { "italic" },
         conditionals = {},
@@ -21,26 +21,16 @@ return {
       custom_highlights = function(colors)
         local cat_opts = require("catppuccin").options
         local groups = {
-          LspReferenceText = { bg = colors.surface0 },
-          LspReferenceRead = { bg = colors.surface0 },
-          LspReferenceWrite = { bg = colors.surface0 },
-          --- This has the bg set because that makes it easier to differentiate
-          --- and also allows it to be used in cmdline
-          --- without the ghost text being impossible to read.
-          --- The earlier value of colors.surface0 for the fg worked
-          --- because it was automatically highlighted in the background
-          --- because of Snacks.words, which uses the LspReference hihglighting.
-          cmpGhostText = { fg = colors.overlay0, bg = colors.surface0 },
+          cmpGhostText = { fg = colors.surface2 },
           BlinkCmpGhostText = { link = "cmpGhostText" },
           Folded = { fg = colors.blue, bg = colors.surface0 },
-          Comment = { fg = colors.overlay0, style = cat_opts.styles.comments },
+          Comment = { fg = colors.overlay1, style = cat_opts.styles.comments },
           YankyPut = { link = "Search" },
           YankyYanked = { link = "IncSearch" },
           YaziFloat = { link = "NormalFloat" },
           ["@variable.builtin"] = { fg = colors.red, style = { "italic" } },
           ["@lsp.mod.global"] = { link = "@variable.builtin" },
           ["@lsp.typemod.variable.global"] = { link = "@variable.builtin" },
-          CursorLine = { bg = colors.crust },
           WinSeparator = { fg = colors.overlay0 },
 
           -- Old colors that have been replaced
