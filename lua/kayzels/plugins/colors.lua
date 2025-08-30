@@ -81,6 +81,7 @@ return {
             information = { "undercurl" },
           },
         },
+        neotest = true,
         neotree = true,
         noice = true,
         notify = true,

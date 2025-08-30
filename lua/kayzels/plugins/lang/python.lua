@@ -27,7 +27,7 @@ return {
   },
   {
     -- "linux-cultist/venv-selector.nvim",
-    -- NOTE: Using this PR for Snacks.picker until mereged
+    -- NOTE: Using this PR for Snacks.picker until merged
     "tonycsoka/venv-selector.nvim",
     dependencies = {
       "mfussenegger/nvim-dap",
@@ -59,6 +59,21 @@ return {
         end,
         desc = "Insert inlay-hint",
         mode = { "n", "v" },
+      },
+    },
+  },
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/neotest-python",
+    },
+    opts = {
+      adapters = {
+        ["neotest-python"] = {
+          dap = { justMyCode = true },
+          runner = "pytest",
+          args = { "--color=no" },
+        },
       },
     },
   },
