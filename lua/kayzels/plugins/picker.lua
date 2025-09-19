@@ -5,6 +5,11 @@ return {
     ---@type snacks.Config
     opts = {
       picker = {
+        sources = {
+          files = {
+            exclude = { "*.mp3" },
+          },
+        },
         ui_select = true,
         formatters = {
           file = {
