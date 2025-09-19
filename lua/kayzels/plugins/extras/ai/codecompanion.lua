@@ -8,7 +8,6 @@ return {
     },
     opts = {
       ---@module 'codecompanion'
-
       extensions = {
         history = {
           enabled = true,
@@ -27,7 +26,7 @@ return {
         },
       },
       adapters = {
-        ---@type fun():CodeCompanion.Adapter
+        ---@type fun():CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter
         gemini = function()
           return require("codecompanion.adapters").extend("gemini", {
             env = {
@@ -42,7 +41,7 @@ return {
         chat = {
           adapter = "gemini",
           roles = {
-            ---@type string|fun(adapter: CodeCompanion.Adapter): string
+            ---@type string|fun(adapter: CodeCompanion.HTTPAdapter|CodeCompanion.ACPAdapter): string
             llm = function(adapter)
               return "󰚩  CodeCompanion " .. "(" .. adapter.formatted_name .. ")"
             end,
@@ -52,6 +51,9 @@ return {
               return "  " .. name:sub(1, 1):upper() .. name:sub(2)
             end)(),
           },
+        },
+        inline = {
+          adapter = "gemini",
         },
       },
     },
