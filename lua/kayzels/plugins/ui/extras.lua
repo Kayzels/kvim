@@ -53,4 +53,19 @@ return {
     end,
     -- NOTE: Not sure of the GPU impact of this...
   },
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    opts = {
+      options = {
+        use_icons_from_diagnostic = true,
+        set_arrow_to_diag_color = true,
+      },
+    },
+    config = function(_, opts)
+      require("tiny-inline-diagnostic").setup(opts)
+      vim.diagnostic.config({ virtual_text = false })
+    end,
+  },
 }

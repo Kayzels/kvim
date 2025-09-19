@@ -11,18 +11,8 @@ function M._setup_diagnostics()
   local icons = KyzVim.icons.diagnostics
   vim.diagnostic.config({
     underline = true,
-    virtual_text = {
-      spacing = 4,
-      source = "if_many",
-      prefix = function(diagnostic)
-        for d, icon in pairs(icons) do
-          if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-            return icon --[[@as string]]
-          end
-        end
-        return "●"
-      end,
-    },
+    -- Remove this, and use tiny-inline-diagnostic.
+    virtual_text = false,
     signs = {
       text = {
         [vim.diagnostic.severity.ERROR] = icons.Error,
