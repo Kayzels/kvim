@@ -1,43 +1,23 @@
 return {
   {
-    "which-key.nvim",
-    ---@module 'which-key'
-    ---@type wk.Opts
-    opts = {
-      spec = {
-        { "<BS>", desc = "Decrement Selection", mode = "x" },
-        { "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
-      },
-    },
-  },
-  {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
+    branch = "main",
     version = false,
-    build = ":TSUpdate",
-    event = "VeryLazy",
-    lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file from the cmdline
-    init = function(plugin)
-      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
-      -- Luckily, the only things that those plugins need are the custom queries, which we make available
-      -- during startup.
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
+    build = function()
+      local TS = require("nvim-treesitter")
+      KyzVim.treesitter.ensure_treesitter_cli(function()
+        TS.update(nil, { summary = true })
+      end)
     end,
+    event = { "LazyFile", "VeryLazy" },
+    lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file from the cmdline
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    keys = {
-      { "<c-space>", desc = "Increment Selection" },
-      { "<bs>", desc = "Decrement Selection", mode = "x" },
-    },
     opts_extend = { "ensure_installed" },
-    ---@module 'nvim-treesitter'
-    ---@type TSConfig
-    ---@diagnostic disable-next-line: missing-fields
+    ---@class kyzvim.TSConfig: TSConfig
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
+      folds = { enable = true },
       ensure_installed = {
         "bash",
         "c",
@@ -73,62 +53,90 @@ return {
         "xml",
         "yaml",
       },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-Space>",
-          node_incremental = "<C-Space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
-          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
-        },
-      },
     },
+    ---@param opts kyzvim.TSConfig
     config = function(_, opts)
-      if type(opts.ensure_installed == "table") then
-        opts.ensure_installed = KyzVim.dedup(opts.ensure_installed)
+      local TS = require("nvim-treesitter")
+      TS.setup(opts)
+      KyzVim.treesitter.get_installed(true) -- intialize the installed langs
+
+      local install = vim.tbl_filter(function(lang)
+        return not KyzVim.treesitter.have(lang)
+      end, opts.ensure_installed or {})
+      if #install > 0 then
+        KyzVim.treesitter.ensure_treesitter_cli(function()
+          TS.install(install, { summary = true }):await(function()
+            KyzVim.treesitter.get_installed(true)
+          end)
+        end)
       end
-      require("nvim-treesitter.configs").setup(opts)
-      vim.treesitter.language.register("html", { "xhtml" })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("kyzvim_treesitter", { clear = true }),
+        callback = function(ev)
+          if not KyzVim.treesitter.have(ev.match) then
+            return
+          end
+
+          -- highlighting
+          if vim.tbl_get(opts, "highlight", "enable") ~= false then
+            pcall(vim.treesitter.start)
+          end
+
+          -- indents
+          if vim.tbl_get(opts, "indent", "enable") ~= false then
+            KyzVim.set_default("indentexpr", "v:lua.KyzVim.treesitter.indentexpr()")
+          end
+
+          -- folds
+          if vim.tbl_get(opts, "folds", "enable") ~= false then
+            if KyzVim.set_default("foldmethod", "expr") then
+              KyzVim.set_default("foldexpr", "v:lua.KyzVim.treesitter.foldexpr()")
+            end
+          end
+        end,
+      })
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     event = "VeryLazy",
-    enabled = true,
-    config = function()
-      if KyzVim.is_loaded("nvim-treesitter") then
-        local opts = KyzVim.opts("nvim-treesitter")
-        ---@diagnostic disable-next-line: missing-fields
-        require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
-      end
-
-      local move = require("nvim-treesitter.textobjects.move") ---@type table<string, fun(...)>
-      local configs = require("nvim-treesitter.configs")
-      for name, fn in pairs(move) do
-        if name:find("goto") == 1 then
-          move[name] = function(q, ...)
-            if vim.wo.diff then
-              local config = configs.get_module("textobjects.move")[name] ---@type table<string, string>
-              for key, query in pairs(config or {}) do
-                if q == query and key:find("[%]%[][cC]") then
-                  vim.cmd("normal! " .. key)
-                  return
-                end
+    branch = "main",
+    opts = {},
+    keys = function()
+      local moves = {
+        goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+        goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+        goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+        goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+      }
+      local ret = {} ---@type LazyKeysSpec[]
+      for method, keymaps in pairs(moves) do
+        for key, query in pairs(keymaps) do
+          local desc = query:gsub("@", ""):gsub("%..*", "")
+          desc = desc:sub(1, 1):upper() .. desc:sub(2)
+          desc = (key:sub(1, 1) == "[" and "Prev " or "Next ") .. desc
+          desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and " End" or " Start")
+          ret[#ret + 1] = {
+            key,
+            function()
+              -- don't use treesitter if in diff mode and the key is one of the c/C keys
+              if vim.wo.diff and key:find("[cC]") then
+                return vim.cmd("normal! " .. key)
               end
-            end
-            return fn(q, ...)
-          end
+              require("nvim-treesitter-textobjects.move")[method](query, "textobjects")
+            end,
+            desc = desc,
+            mode = { "n", "x", "o" },
+            silent = true,
+          }
         end
       end
+      return ret
+    end,
+    config = function(_, opts)
+      local TS = require("nvim-treesitter-textobjects")
+      TS.setup(opts)
     end,
   },
   {
