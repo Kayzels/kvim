@@ -25,4 +25,32 @@ return {
       return opts
     end,
   },
+  {
+    "sphamba/smear-cursor.nvim",
+    opts = function()
+      local smear = require("smear_cursor")
+      Snacks.toggle({
+        name = "Smear Cursor",
+        set = function()
+          smear.toggle()
+        end,
+        get = function()
+          return smear.enabled
+        end,
+      }):map("<leader>uo")
+      return {
+        enabled = true,
+        smear_insert_mode = false,
+        min_horizontal_distance_smear = 4,
+        min_vertical_distance_smear = 3,
+        -- smear_between_neighbor_lines = false,
+        -- legacy_computing_symbols_support = true,
+        -- legacy_computing_symbols_support_vertical_bars = true,
+        -- smear_to_cmd = false,
+        hide_target_hack = true,
+        cursor_color = "none",
+      }
+    end,
+    -- NOTE: Not sure of the GPU impact of this...
+  },
 }

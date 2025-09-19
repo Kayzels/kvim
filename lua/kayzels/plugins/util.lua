@@ -21,6 +21,9 @@ return {
       lazygit = {
         configure = false,
       },
+      scroll = {
+        enabled = true,
+      },
       terminal = {
         win = {
           keys = {

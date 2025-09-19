@@ -145,9 +145,9 @@ local M = {
       image = {
         enabled = true,
         doc = {
-          enabled = false,
+          enabled = true,
           float = false,
-          inline = false,
+          inline = true,
         },
       },
       input = { enabled = true },
