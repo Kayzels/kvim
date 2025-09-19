@@ -26,14 +26,11 @@ return {
     end,
   },
   {
-    -- "linux-cultist/venv-selector.nvim",
-    -- NOTE: Using this PR for Snacks.picker until merged
-    "tonycsoka/venv-selector.nvim",
+    "linux-cultist/venv-selector.nvim",
     dependencies = {
       "mfussenegger/nvim-dap",
       "mfussenegger/nvim-dap-python",
     },
-    branch = "regexp",
     cmd = "VenvSelect",
     ---@module 'venv-selector'
     ---@type venv-selector.Config
