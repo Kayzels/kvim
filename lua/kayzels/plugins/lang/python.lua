@@ -33,9 +33,8 @@ return {
     },
     cmd = "VenvSelect",
     ---@module 'venv-selector'
-    ---@type venv-selector.Config
     opts = {
-      ---@diagnostic disable-next-line: missing-fields
+      ---@type venv-selector.Options
       options = {
         notify_user_on_venv_activation = false,
       },
