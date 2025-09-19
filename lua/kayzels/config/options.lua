@@ -85,6 +85,7 @@ opt.sidescrolloff = 5 -- Columns to keep to the right of the cursor (LazyVim has
 opt.signcolumn = "yes"
 opt.smartcase = true
 opt.smartindent = true
+opt.smoothscroll = true
 opt.splitbelow = true -- Put new window below current, rather than above
 opt.splitkeep = "screen"
 opt.splitright = true -- Put new window to the right of current, rather than left

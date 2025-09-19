@@ -8,7 +8,7 @@ return {
     },
     build = "rustup run nightly cargo build --release",
     version = "*",
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
       "folke/lazydev.nvim",
@@ -104,9 +104,13 @@ return {
   },
   {
     "saghen/blink.cmp",
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
       sources = {
-        default = { "lazydev" },
+        per_filetype = {
+          lua = { inherit_defaults = true, "lazydev" },
+        },
         providers = {
           lazydev = {
             name = "LazyDev",

@@ -1,4 +1,27 @@
 local M = {
+  -- search/replace in multiple files
+  {
+    "MagicDuck/grug-far.nvim",
+    opts = {},
+    cmd = { "GrugFar", "GrugFarWithin" },
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          local grug = require("grug-far")
+          local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+          grug.open({
+            transient = true,
+            prefills = {
+              filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+            },
+          })
+        end,
+        mode = { "n", "v" },
+        desc = "Search and Replace",
+      },
+    },
+  },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -16,6 +39,20 @@ local M = {
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search", },
       -- stylua: ignore
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search", },
+      -- Simulate nvim-treesitter incremental selection.
+      {
+        "<c-space>",
+        mode = { "n", "o", "x" },
+        function()
+          require("flash").treesitter({
+            actions = {
+              ["<c-space>"] = "next",
+              ["<BS>"] = "prev",
+            },
+          })
+        end,
+        desc = "Treesitter Incremental Selection",
+      },
     },
   },
   {
@@ -115,7 +152,7 @@ local M = {
         local gs = package.loaded.gitsigns
 
         local function map(mode, l, r, desc)
-          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+          vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc, silent = true })
         end
 
         -- stylua: ignore start

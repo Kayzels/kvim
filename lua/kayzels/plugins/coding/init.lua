@@ -1,4 +1,7 @@
 local M = {
+  -- Auto pairs
+  -- Automatically inserts a matching closing character
+  -- when you type an opening character
   {
     "echasnovski/mini.pairs",
     event = "VeryLazy",
@@ -21,11 +24,17 @@ local M = {
       KyzVim.mini.pairs(opts)
     end,
   },
+  -- Improves comment syntax, lets Neovim handle multiple
+  -- types of comments for a single language, and relaxes rules
+  -- for uncommenting.
   {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
     opts = {},
   },
+  -- Extends the `a`` & `i` text objects, adding the ability to select
+  -- arguments, function calls, text within quotes and brackets,
+  -- and repeat those selections.
   {
     "echasnovski/mini.ai",
     event = "VeryLazy",
@@ -63,6 +72,8 @@ local M = {
       end)
     end,
   },
+  -- Configures LuaLS to support auto-completion and type checking
+  -- while editing your Neovim configuration.
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -74,6 +85,7 @@ local M = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "snacks.nvim", words = { "Snacks" } },
         { path = "KyzVim", words = { "KyzVim" } },
+        -- TODO: Wezterm types library installation
       },
     },
   },
