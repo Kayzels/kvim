@@ -17,38 +17,38 @@ return {
             return false
           end,
         },
-        ["markdownlint-cli2"] = {
-          condition = function(_, ctx)
-            local diag = vim.tbl_filter(function(d)
-              return d.source == "markdownlint"
-            end, vim.diagnostic.get(ctx.buf))
-            return #diag > 0
-          end,
-        },
+        -- ["markdownlint-cli2"] = {
+        --   condition = function(_, ctx)
+        --     local diag = vim.tbl_filter(function(d)
+        --       return d.source == "markdownlint"
+        --     end, vim.diagnostic.get(ctx.buf))
+        --     return #diag > 0
+        --   end,
+        -- },
       },
       formatters_by_ft = {
-        ["markdown"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
-        ["markdown.mdx"] = { "prettier", "markdownlint-cli2", "markdown-toc" },
+        ["markdown"] = { "prettier", "markdown-toc" },
+        ["markdown.mdx"] = { "prettier", "markdown-toc" },
       },
     },
   },
-  {
-    "mfussenegger/nvim-lint",
-    opts = {
-      linters_by_ft = {
-        markdown = { "markdownlint-cli2" },
-      },
-      linters = {
-        ["markdownlint-cli2"] = {
-          args = {
-            "--config",
-            HOME .. "/.markdownlint-cli2.yaml",
-            "--",
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   "mfussenegger/nvim-lint",
+  --   opts = {
+  --     linters_by_ft = {
+  --       markdown = { "markdownlint-cli2" },
+  --     },
+  --     linters = {
+  --       ["markdownlint-cli2"] = {
+  --         args = {
+  --           "--config",
+  --           HOME .. "/.markdownlint-cli2.yaml",
+  --           "--",
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
