@@ -3,7 +3,7 @@ local M = {
   -- Automatically inserts a matching closing character
   -- when you type an opening character
   {
-    "echasnovski/mini.pairs",
+    "nvim-mini/mini.pairs",
     event = "VeryLazy",
     opts = {
       modes = { insert = true, command = false, terminal = false },
@@ -36,7 +36,7 @@ local M = {
   -- arguments, function calls, text within quotes and brackets,
   -- and repeat those selections.
   {
-    "echasnovski/mini.ai",
+    "nvim-mini/mini.ai",
     event = "VeryLazy",
     opts = function()
       local ai = require("mini.ai")

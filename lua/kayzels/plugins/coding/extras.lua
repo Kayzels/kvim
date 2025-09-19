@@ -1,6 +1,6 @@
 return {
   {
-    "echasnovski/mini.surround",
+    "nvim-mini/mini.surround",
     keys = function(_, keys)
       local opts = KyzVim.opts("mini.surround")
       local mappings = {

@@ -120,7 +120,7 @@ local M = {
     end,
   },
   {
-    "echasnovski/mini.icons",
+    "nvim-mini/mini.icons",
     opts = {
       default = {
         file = { glyph = "󰦪" },
