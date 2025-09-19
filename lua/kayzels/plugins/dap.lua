@@ -46,6 +46,8 @@ return {
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+      { "[x", function() KyzVim.dap.go_to_breakpoint("previous") end, desc = "Previous Breakpoint" },
+      { "]x", function() KyzVim.dap.go_to_breakpoint("next") end, desc = "Next Breakpoint" },
     },
 
     config = function ()

@@ -10,6 +10,7 @@
 ---@field icons kayzels.icons
 ---@field tabout kayzels.utils.tabout
 ---@field markdown kayzels.utils.markdown
+---@field dap kayzels.utils.dap
 local M = {}
 
 setmetatable(M, {
