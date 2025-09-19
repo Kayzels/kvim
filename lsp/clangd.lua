@@ -22,7 +22,15 @@ end
 ---@field offsetEncoding? string
 
 return {
-  cmd = { "clangd" },
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+    "--completion-style=detailed",
+    "--functon-arg-placeholders",
+    "--fallback-style=llvm",
+  },
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
   root_markers = {
     ".clangd",
@@ -40,6 +48,11 @@ return {
       },
     },
     offsetEncoding = { "utf-8", "utf-16" },
+  },
+  init_options = {
+    usePlaceholders = true,
+    completeUnimported = true,
+    clangdFileStatus = true,
   },
   ---@param client vim.lsp.Client
   ---@param init_result ClangdInitializeResult
