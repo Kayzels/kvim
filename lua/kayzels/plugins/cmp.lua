@@ -16,7 +16,11 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      -- TODO: Sort out snippets
+      snippets = {
+        expand = function(snippet)
+          return KyzVim.snippets.expand(snippet)
+        end,
+      },
       appearance = {
         nerd_font_variant = "normal",
       },

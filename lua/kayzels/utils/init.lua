@@ -12,6 +12,7 @@
 ---@field markdown kayzels.utils.markdown
 ---@field dap kayzels.utils.dap
 ---@field treesitter kayzels.utils.treesitter
+---@field snippets kayzels.utils.snippets
 local M = {}
 
 setmetatable(M, {

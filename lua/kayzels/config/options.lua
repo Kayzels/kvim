@@ -99,7 +99,6 @@ opt.undolevels = 10000
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.virtualedit = "block"
 
--- TODO: See if there's a way we can make enter on a popup item not accept
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 
 opt.winborder = "rounded"
