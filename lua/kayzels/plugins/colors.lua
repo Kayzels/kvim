@@ -7,6 +7,15 @@ return {
     ---@module 'catppuccin'
     ---@type CatppuccinOptions
     opts = {
+      lsp_styles = {
+        enabled = true,
+        underlines = {
+          errors = { "undercurl" },
+          hints = { "undercurl" },
+          warnings = { "undercurl" },
+          information = { "undercurl" },
+        },
+      },
       transparent_background = false,
       styles = {
         comments = { "italic" },
@@ -60,28 +69,16 @@ return {
         gitsigns = true,
         lsp_trouble = true,
         mason = true,
-        markdown = true,
         mini = true,
-        native_lsp = {
-          enabled = true,
-          underlines = {
-            errors = { "undercurl" },
-            hints = { "undercurl" },
-            warnings = { "undercurl" },
-            information = { "undercurl" },
-          },
-        },
         neotest = true,
         neotree = true,
         noice = true,
         notify = true,
         render_markdown = true,
-        semantic_tokens = true,
         snacks = {
           enabled = true,
           indent_scope_color = "lavender",
         },
-        treesitter = true,
         treesitter_context = true,
         which_key = true,
       },
