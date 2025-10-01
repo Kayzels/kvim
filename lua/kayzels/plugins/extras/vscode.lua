@@ -18,6 +18,7 @@ local enabled = {
   "snacks.nvim",
   "ts-comments.nvim",
   "yanky.nvim",
+  "flash.nvim",
 }
 
 local Config = require("lazy.core.config")
