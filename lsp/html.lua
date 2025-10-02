@@ -16,6 +16,7 @@ return {
         wrapLineLength = 0,
         indentInnerHtml = false,
         maxPreserveNewLines = 2,
+        extraLiners = "head, body, /html, p, section, div, ol, ul, li",
       },
     },
   },
