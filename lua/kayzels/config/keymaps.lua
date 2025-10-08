@@ -240,7 +240,7 @@ Snacks.toggle({
 -- Yank into system clipboard (because pressing shift+" and then shift and + is tedious; but I don't want to always copy/paste from clipboard)
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank into clipboard" })
 map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from clipboard (after cursor)" })
-map({ "n", "v" }, "<leader>p", '"+P', { desc = "Paste from clipboard (before cursor)" })
+map({ "n", "v" }, "<leader>P", '"+P', { desc = "Paste from clipboard (before cursor)" })
 
 -- stylua: ignore start
 -- Manually make mappings for tab out, instead of using plugin
