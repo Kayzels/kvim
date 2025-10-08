@@ -117,7 +117,7 @@ function M.pairs(opts)
 
     --- Python triple quotes
     if opts.python and vim.bo.filetype == "python" then
-      if (before:match('""') and o == '"') or (before:match("''") and o == "'") then
+      if (before:match('""$') and o == '"') or (before:match("''$") and o == "'") then
         return o .. o .. o .. o .. vim.api.nvim_replace_termcodes("<left><left><left>", true, true, true)
       end
     end
