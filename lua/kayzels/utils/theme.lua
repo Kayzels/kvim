@@ -2,7 +2,7 @@
 local M = {}
 
 ---@type 'dark'|'light'
-M.mode_on_open = "light"
+M.mode_on_open = "dark"
 local first_call = true
 
 ---@type { dark: string, light: string}
