@@ -72,4 +72,13 @@ return {
       }
     end,
   },
+  {
+    "Aasim-A/scrollEOF.nvim",
+    event = { "CursorMoved", "WinScrolled" },
+    ---@type {pattern?:string, insert_mode?:boolean, floating?:boolean, disabled_filetypes?:string[], disabled_modes?:string[]}
+    opts = {
+      floating = false,
+      insert_mode = false,
+    },
+  },
 }
