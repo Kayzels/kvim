@@ -63,6 +63,8 @@ vim.api.nvim_create_autocmd("User", {
 --- Setting to a very high value, so it stops showing before I wany.
 vim.o.cmdheight = 99
 
+vim.o.spell = false
+
 return {
   {
     "snacks.nvim",

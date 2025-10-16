@@ -145,13 +145,13 @@ function M.setup()
   LspUtils.setup()
   LspUtils.on_dynamic_capability(LspKeys.on_attach)
 
-  vim.lsp.buf.definition = Snacks.picker.lsp_definitions
-  vim.lsp.buf.references = Snacks.picker.lsp_references
-  vim.lsp.buf.implementation = Snacks.picker.lsp_implementations
-  vim.lsp.buf.type_definition = Snacks.picker.lsp_type_definitions
-
-  -- Add mappings to which-key for defaults
   if not vim.g.vscode then
+    -- change lsp actions to use Snacks picker
+    vim.lsp.buf.definition = Snacks.picker.lsp_definitions
+    vim.lsp.buf.references = Snacks.picker.lsp_references
+    vim.lsp.buf.implementation = Snacks.picker.lsp_implementations
+    vim.lsp.buf.type_definition = Snacks.picker.lsp_type_definitions
+    -- Add mappings to which-key for defaults
     local wk = require("which-key")
     wk.add({
       { "gr", group = "LSP Go To" },
