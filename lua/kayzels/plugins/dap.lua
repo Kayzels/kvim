@@ -67,6 +67,12 @@ return {
       vscode.json_decode = function (str)
         return vim.json.decode(json.json_strip_comments(str))
       end
+
+      local dap = require("dap")
+      dap.defaults.fallback.external_terminal = {
+        command = "/usr/bin/ghostty",
+        args = {"-e"},
+      }
     end,
   },
   {
