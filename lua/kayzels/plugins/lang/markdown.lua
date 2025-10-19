@@ -71,6 +71,7 @@ return {
     ---@type render.md.UserConfig
     opts = {
       code = {
+        border = "thin",
         sign = true,
         width = "block",
         right_pad = 1,
