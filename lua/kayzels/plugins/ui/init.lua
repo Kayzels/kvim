@@ -125,6 +125,9 @@ local M = {
       default = {
         file = { glyph = "󰦪" },
       },
+      filetype = {
+        tcss = { glyph = "󰌜", hl = "MiniIconsAzure" },
+      },
     },
     lazy = true,
     init = function()

@@ -96,6 +96,13 @@ return {
           end
         end,
       })
+
+      vim.filetype.add({
+        extension = {
+          tcss = "tcss",
+        },
+      })
+      vim.treesitter.language.register("css", { "tcss" })
     end,
   },
   {
