@@ -1,9 +1,6 @@
 local M = {
   {
-    -- NOTE: Use own package due to issue with winborder and scrollbar
-    "Kayzels/noice.nvim",
-    branch = "fix-scrollbar",
-    -- enabled = false,
+    "folke/noice.nvim",
     event = "VeryLazy",
     ---@module 'noice'
     ---@type NoiceConfig
