@@ -13,6 +13,7 @@
 ---@field dap kayzels.utils.dap
 ---@field treesitter kayzels.utils.treesitter
 ---@field snippets kayzels.utils.snippets
+---@field lsp kayzels.utils.lsp
 local M = {}
 
 setmetatable(M, {

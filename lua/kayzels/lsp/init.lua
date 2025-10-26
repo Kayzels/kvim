@@ -116,7 +116,7 @@ function M._modify_servers()
   end, "ruff")
 end
 
-local did_setup = false
+local did_setup = true
 
 ---@return boolean
 function M.state()

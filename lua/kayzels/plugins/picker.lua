@@ -129,6 +129,23 @@ return {
       return opts
     end,
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function()
+      local Keys = require("kayzels.plugins.lsp.keymaps").get()
+      -- stylua: ignore
+      vim.list_extend(Keys, {
+        { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition", has = "definition" },
+        { "grr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
+        { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
+        { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
+        { "<leader>ss", function() Snacks.picker.lsp_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Symbols", has = "documentSymbol" },
+        { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbols" },
+        { "grc", function() Snacks.picker.lsp_incoming_calls() end, desc = "Calls Incoming", has = "callHierarchy/incomingCalls" },
+        { "grC", function() Snacks.picker.lsp_outgoing_calls() end, desc = "Calls Outgoing", has = "callHierarchy/outgoingCalls" },
+      })
+    end,
+  },
   -- {
   --   "folke/snacks.nvim",
   --   ---@param opts snacks.Config
