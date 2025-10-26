@@ -74,6 +74,7 @@ return {
         neotree = true,
         noice = true,
         notify = true,
+        octo = true,
         render_markdown = true,
         snacks = {
           enabled = true,
