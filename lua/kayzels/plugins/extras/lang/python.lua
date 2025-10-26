@@ -73,4 +73,37 @@ return {
       },
     },
   },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ruff = {
+          keys = {
+            {
+              "<leader>co",
+              KyzVim.lsp.action["source.organizeImports"],
+              desc = "Organize Imports",
+            },
+          },
+        },
+      },
+      setup = {
+        ruff = function()
+          Snacks.util.lsp.on({ name = "ruff" }, function(_, client)
+            client.server_capabilities.hoverProvider = false
+          end)
+        end,
+      },
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      local servers = { "basedpyright", "ruff" }
+      for _, server in ipairs(servers) do
+        opts.servers[server] = opts.servers[server] or {}
+        opts.servers[server].enabled = true
+      end
+    end,
+  },
 }
