@@ -73,7 +73,7 @@ return {
               { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "textDocument/codeLens" },
               { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File", mode = { "n" }, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
               { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "textDocument/rename" },
-              { "<leader>cA", require("kayzels.lsp.util").action.source, desc = "Source Action", has = "textDocument/codeAction" },
+              { "<leader>cA", KyzVim.lsp.action.source, desc = "Source Action", has = "textDocument/codeAction" },
               { "]]", function() Snacks.words.jump(vim.v.count1) end, has = "textDocument/documentHighlight",
                 desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
               { "[[", function() Snacks.words.jump(-vim.v.count1) end, has = "textDocument/documentHighlight",

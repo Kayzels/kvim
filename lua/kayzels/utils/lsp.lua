@@ -129,7 +129,7 @@ function M.formatter(opts)
   return require("lazy.core.util").merge(ret, opts) --[[@as Formatter]]
 end
 
----@alias LspFormat{ timeout_ms?: number, format_options?:table} | LspFilter
+---@alias LspFormat{ timeout_ms?: number, format_options?:table} | vim.lsp.get_clients.Filter
 
 ---@param opts? LspFormat
 function M.format(opts)

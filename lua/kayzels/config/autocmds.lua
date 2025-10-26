@@ -147,28 +147,6 @@ vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
   command = "set guicursor=n-v-c-sm:block,i-ci-ve:ver25-blinkon1200-blinkoff1200,r-cr-o:hor20,t:ver25-blinkon500-blinkoff500-TermCursor",
 })
 
---- LSP Autocmd for loading
-local lsp_group = augroup("KyzLsp")
-vim.api.nvim_create_autocmd("User", {
-  group = lsp_group,
-  once = true,
-  pattern = "KyzLspSetup",
-  callback = function()
-    require("kayzels.lsp").setup()
-  end,
-})
-
-vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile", "BufReadPost" }, {
-  group = lsp_group,
-  pattern = "*",
-  once = true,
-  callback = function()
-    vim.api.nvim_exec_autocmds("User", {
-      pattern = "KyzLspSetup",
-    })
-  end,
-})
-
 -- Zip files (and related) don't trigger the other events, so explicitly call
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "zip",
