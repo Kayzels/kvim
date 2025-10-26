@@ -73,16 +73,6 @@ return {
               { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "textDocument/codeLens" },
               { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File", mode = { "n" }, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
               { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "textDocument/rename" },
-              -- {
-              --   "<leader>cr",
-              --   function()
-              --     local inc_rename = require("inc_rename")
-              --     return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-              --   end,
-              --   expr = true,
-              --   desc = "Rename (inc-rename)",
-              --   has = "textDocument/rename",
-              -- },
               { "<leader>cA", require("kayzels.lsp.util").action.source, desc = "Source Action", has = "textDocument/codeAction" },
               { "]]", function() Snacks.words.jump(vim.v.count1) end, has = "textDocument/documentHighlight",
                 desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },

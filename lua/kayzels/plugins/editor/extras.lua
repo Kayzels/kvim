@@ -42,11 +42,6 @@ return {
     end,
   },
   {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    opts = {},
-  },
-  {
     "nvim-mini/mini.move",
     event = "VeryLazy",
     opts = {},
