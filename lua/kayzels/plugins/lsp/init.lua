@@ -41,22 +41,61 @@ return {
         folds = {
           enabled = true,
         },
-        capabilities = {
-          workspace = {
-            fileOperations = {
-              didRename = true,
-              willRename = true,
-            },
-          },
-        },
         format = {
           formatting_options = nil,
           timeout_ms = nil,
         },
         -- LSP Server Settings
-        ---@alias kyzvim.lsp.Config vim.lsp.Config | {mason?:boolean, enabled?:boolean}
+        ---@alias kyzvim.lsp.Config vim.lsp.Config | {mason?:boolean, enabled?:boolean, keys?:LazyKeysLspSpec[]}
         ---@type table<string, kyzvim.lsp.Config|boolean>
         servers = {
+          ["*"] = {
+            capabilities = {
+              workspace = {
+                fileOperations = {
+                  didRename = true,
+                  willRename = true,
+                },
+              },
+            },
+            -- stylua: ignore
+            keys = {
+              { "<leader>cl", function() Snacks.picker.lsp_config() end, desc = "Lsp Info", },
+              { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "textDocument/definition" },
+              { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
+              { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
+              { "gD", vim.lsp.buf.declaration, desc = "Goto Declaraion" },
+              -- K is already hover by default now
+              { "gK", function() return vim.lsp.buf.signature_help() end, desc = "Signature Help", has = "textDocument/signatureHelp" },
+              { "<c-k>", function() return vim.lsp.buf.signature_help() end, mode = "i", desc = "Signature Help", has = "textDocument/signatureHelp" },
+              { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "textDocument/codeAction" },
+              { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "textDocument/codeLens" },
+              { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "textDocument/codeLens" },
+              { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File", mode = { "n" }, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
+              { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "textDocument/rename" },
+              -- {
+              --   "<leader>cr",
+              --   function()
+              --     local inc_rename = require("inc_rename")
+              --     return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
+              --   end,
+              --   expr = true,
+              --   desc = "Rename (inc-rename)",
+              --   has = "textDocument/rename",
+              -- },
+              { "<leader>cA", require("kayzels.lsp.util").action.source, desc = "Source Action", has = "textDocument/codeAction" },
+              { "]]", function() Snacks.words.jump(vim.v.count1) end, has = "textDocument/documentHighlight",
+                desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
+              { "[[", function() Snacks.words.jump(-vim.v.count1) end, has = "textDocument/documentHighlight",
+                desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end, },
+              { "<a-n>", function() Snacks.words.jump(vim.v.count1, true) end, has = "textDocument/documentHighlight",
+                desc = "Next Reference", cond = function() return Snacks.words.is_enabled() end, },
+              { "<a-p>", function() Snacks.words.jump(-vim.v.count1, true) end, has = "textDocument/documentHighlight",
+                desc = "Prev Reference", cond = function() return Snacks.words.is_enabled() end, },
+              { "<leader>ss", function () Snacks.picker.lsp_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Symbols", has = "textDocument/documentSymbol" },
+              { "<leader>sS", function () Snacks.picker.lsp_workspace_symbols({ filter = KyzVim.filter.kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbol" }
+            },
+          },
           stylua = { enabled = false },
         },
         ---@type table<string, fun(server:string, opts: vim.lsp.Config):boolean?>
@@ -69,9 +108,11 @@ return {
       KyzVim.format.register(KyzVim.lsp.formatter())
 
       -- Set up keymaps
-      KyzVim.lsp.on_attach(function(client, buffer)
-        require("kayzels.plugins.lsp.keymaps").on_attach(client, buffer)
-      end)
+      for server, server_opts in pairs(opts.servers) do
+        if type(server_opts) == "table" and server_opts.keys then
+          require("kayzels.plugins.lsp.keymaps").set({ name = server ~= "*" and server or nil }, server_opts.keys)
+        end
+      end
 
       KyzVim.lsp.setup()
       KyzVim.lsp.on_dynamic_capability(require("kayzels.plugins.lsp.keymaps").on_attach)
@@ -123,10 +164,6 @@ return {
       end
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-      if opts.capabilities then
-        vim.lsp.config("*", { capabilities = opts.capabilities })
-      end
-
       -- get all servers that are available through mason-lspconfig
       local have_mason = KyzVim.has("mason-lspconfig.nvim")
       local mason_all = have_mason
@@ -136,6 +173,9 @@ return {
 
       ---@return boolean? exclude automatic setup
       local function configure(server)
+        if server == "*" then
+          return false
+        end
         local sopts = opts.servers[server]
         sopts = sopts == true and {} or (not sopts) and { enabled = false } or sopts --[[@as kyzvim.lsp.Config]]
 
