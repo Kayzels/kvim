@@ -41,6 +41,7 @@ return {
           ["@lsp.mod.global"] = { link = "@variable.builtin" },
           ["@lsp.typemod.variable.global"] = { link = "@variable.builtin" },
           WinSeparator = { fg = colors.overlay0 },
+          SnacksNormal = { link = "NormalFloat" },
 
           -- Old colors that have been replaced
           ["@variable.member"] = { fg = colors.lavender },
