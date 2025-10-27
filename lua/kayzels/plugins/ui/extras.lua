@@ -55,12 +55,18 @@ return {
   },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
+    -- TODO: Check whether the issue with the diagnostics not being removed is fixed
+    commit = "d63373f",
+    -- cond = false,
     event = "VeryLazy",
     priority = 1000,
     opts = {
       options = {
         use_icons_from_diagnostic = true,
         set_arrow_to_diag_color = true,
+        show_source = {
+          if_many = true,
+        },
       },
     },
     config = function(_, opts)
