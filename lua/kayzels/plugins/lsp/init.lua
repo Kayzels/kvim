@@ -104,9 +104,6 @@ return {
         end
       end
 
-      KyzVim.lsp.setup()
-      KyzVim.lsp.on_dynamic_capability(require("kayzels.plugins.lsp.keymaps").on_attach)
-
       -- Inlay hints
       if opts.inlay_hints.enabled then
         Snacks.util.lsp.on({ method = "textDocument/inlayHint" }, function(buffer)
@@ -153,6 +150,10 @@ return {
         end
       end
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+      if opts.servers["*"] then
+        vim.lsp.config("*", opts.servers["*"])
+      end
 
       -- get all servers that are available through mason-lspconfig
       local have_mason = KyzVim.has("mason-lspconfig.nvim")
