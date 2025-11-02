@@ -49,6 +49,7 @@ return {
         "rst",
         "scss",
         "svelte",
+        "tcss",
         "toml",
         "tsx",
         "typescript",
@@ -102,12 +103,26 @@ return {
         end,
       })
 
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+          require("nvim-treesitter.parsers").tcss = {
+            install_info = {
+              url = "https://github.com/Kayzels/tree-sitter-tcss",
+              revision = "HEAD",
+              branch = "main",
+              queries = "queries",
+            },
+            tier = 2,
+          }
+        end,
+      })
+
       vim.filetype.add({
         extension = {
           tcss = "tcss",
         },
       })
-      vim.treesitter.language.register("css", { "tcss" })
     end,
   },
   {
