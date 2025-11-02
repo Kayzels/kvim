@@ -20,6 +20,7 @@ opt.fillchars = {
   foldsep = " ",
   fold = " ",
   eob = " ",
+  diff = "·",
 }
 opt.foldlevel = 99
 
