@@ -75,7 +75,7 @@ return {
   {
     "Aasim-A/scrollEOF.nvim",
     -- FIXME: Weird interaction with Snacks smooth scrolling (more likely a Snacks bug)
-    cond = false,
+    -- cond = false,
     event = { "CursorMoved", "WinScrolled" },
     ---@type {pattern?:string, insert_mode?:boolean, floating?:boolean, disabled_filetypes?:string[], disabled_modes?:string[]}
     opts = {
