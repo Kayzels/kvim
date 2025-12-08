@@ -33,7 +33,6 @@ return {
         "jsdoc",
         "json",
         "json5",
-        "jsonc",
         "latex",
         "lua",
         "luadoc",
