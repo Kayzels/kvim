@@ -149,19 +149,15 @@ return {
     },
   },
   {
-    "f-person/auto-dark-mode.nvim",
+    "vimpostor/vim-lumen",
     cond = function()
       local current_term = os.getenv("TERM")
       return current_term ~= "xterm-kitty" and current_term ~= "xterm-ghostty"
     end,
-    opts = {
-      update_interval = 1000,
-      set_dark_mode = function()
-        vim.opt.background = "dark"
-      end,
-      set_light_mode = function()
-        vim.opt.background = "light"
-      end,
-    },
+    config = function()
+      vim.g.lumen_light_colorscheme = "catppuccin-latte"
+      vim.g.lumen_dark_colorscheme = "tokyonight"
+      vim.g.lumen_startup_overwrite = 0
+    end,
   },
 }
