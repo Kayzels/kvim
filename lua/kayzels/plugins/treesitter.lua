@@ -122,6 +122,8 @@ return {
           tcss = "tcss",
         },
       })
+
+      vim.treesitter.language.register("html", { "xhtml" })
     end,
   },
   {
