@@ -109,7 +109,6 @@ return {
           require("nvim-treesitter.parsers").tcss = {
             install_info = {
               url = "https://github.com/Kayzels/tree-sitter-tcss",
-              revision = "HEAD",
               branch = "main",
               queries = "queries",
             },
