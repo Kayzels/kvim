@@ -10,3 +10,7 @@ vim.b.miniai_config = {
     t = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
   },
 }
+
+vim.schedule(function()
+  vim.bo.indentexpr = ""
+end)
