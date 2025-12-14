@@ -5,7 +5,10 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "ravitemer/codecompanion-history.nvim",
+      {
+        "ravitemer/codecompanion-history.nvim",
+        commit = "eb99d25",
+      },
     },
     opts = {
       ---@module 'codecompanion'
