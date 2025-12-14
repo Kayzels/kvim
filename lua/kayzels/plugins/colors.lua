@@ -43,6 +43,7 @@ return {
           WinSeparator = { fg = colors.overlay0 },
           SnacksNormal = { link = "NormalFloat" },
           ["@lsp.type.enumMember"] = { fg = colors.peach },
+          RenderMarkdownCodeInline = { bg = colors.crust },
 
           -- Old colors that have been replaced
           ["@variable.member"] = { fg = colors.lavender },
@@ -146,6 +147,7 @@ return {
         hl["@variable.builtin"] = { fg = c.red, italic = true }
         hl["@lsp.mod.global"] = hl["@variable.builtin"]
         hl["@lsp.typemod.variable.global"] = hl["@variable.builtin"]
+        hl["@markup.raw.markdown_inline"] = { bg = c.terminal_black }
       end,
     },
   },
