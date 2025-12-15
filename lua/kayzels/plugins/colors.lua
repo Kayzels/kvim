@@ -44,6 +44,8 @@ return {
           SnacksNormal = { link = "NormalFloat" },
           ["@lsp.type.enumMember"] = { fg = colors.peach },
           RenderMarkdownCodeInline = { bg = colors.crust },
+          RenderMarkdownQuote1 = { bg = colors.crust },
+          ["@markup.quote.markdown"] = { fg = colors.text },
 
           -- Old colors that have been replaced
           ["@variable.member"] = { fg = colors.lavender },
@@ -148,6 +150,7 @@ return {
         hl["@lsp.mod.global"] = hl["@variable.builtin"]
         hl["@lsp.typemod.variable.global"] = hl["@variable.builtin"]
         hl["@markup.raw.markdown_inline"] = { bg = c.terminal_black }
+        hl["@markup.strong"] = { bold = true, fg = c.blue }
       end,
     },
   },
