@@ -87,6 +87,9 @@ return {
       pipe_table = {
         preset = "round",
       },
+      quote = {
+        repeat_linebreak = true,
+      },
     },
     ft = KyzVim.markdown.filetypes,
     config = function(_, opts)
