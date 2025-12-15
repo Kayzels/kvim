@@ -127,7 +127,7 @@ return {
       statusline = { enabled = false },
       footer = { enabled = false },
       ui = {
-        bullets = false,
+        enable = false,
       },
     },
   },
