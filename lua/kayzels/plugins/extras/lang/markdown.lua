@@ -110,4 +110,25 @@ return {
       }):map("<leader>um")
     end,
   },
+  {
+    "obsidian-nvim/obsidian.nvim",
+    ft = "markdown",
+    ---@module 'obsidian'
+    ---@type obsidian.config
+    opts = {
+      legacy_commands = false,
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/projects/Obsidian",
+        },
+      },
+      disable_frontmatter = true,
+      statusline = { enabled = false },
+      footer = { enabled = false },
+      ui = {
+        bullets = false,
+      },
+    },
+  },
 }
