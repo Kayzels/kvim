@@ -5,17 +5,31 @@ local M = {}
 M.mode_on_open = "dark"
 local first_call = true
 
----@type { dark: string, light: string}
+---@alias KThemeMap { module: string, flavor: string }
+
+---@type { dark: KThemeMap, light: KThemeMap }
+local mode_map = {
+  light = {
+    module = "catppuccin",
+    flavor = "catppuccin-latte",
+  },
+  dark = {
+    module = "tokyonight",
+    flavor = "tokyonight-moon",
+  },
+}
+
+---@type { dark: string, light: string }
 M.theme_for_mode = {
-  light = "catppuccin",
-  dark = "tokyonight",
+  light = mode_map.light.flavor,
+  dark = mode_map.dark.flavor,
 }
 
 ---Set the theme that should be used, based on the mode
 ---@param mode 'light'|'dark'
 local function set_theme(mode)
-  require(M.theme_for_mode[mode])
-  vim.cmd.colorscheme(M.theme_for_mode[mode])
+  require(mode_map[mode].module)
+  vim.cmd.colorscheme(mode_map[mode].flavor)
 end
 
 ---Set the theme that should be used.

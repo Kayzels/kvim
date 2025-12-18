@@ -161,8 +161,9 @@ return {
       return current_term ~= "xterm-kitty" and current_term ~= "xterm-ghostty"
     end,
     config = function()
-      vim.g.lumen_light_colorscheme = "catppuccin-latte"
-      vim.g.lumen_dark_colorscheme = "tokyonight"
+      KTheme = KyzVim.theme
+      vim.g.lumen_light_colorscheme = KTheme.theme_for_mode.light
+      vim.g.lumen_dark_colorscheme = KTheme.theme_for_mode.dark
       vim.g.lumen_startup_overwrite = 0
     end,
   },
