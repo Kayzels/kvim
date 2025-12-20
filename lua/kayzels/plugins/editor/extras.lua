@@ -51,6 +51,7 @@ return {
     dependencies = {
       { "nvim-lua/plenary.nvim", lazy = true },
     },
+    event = "VeryLazy",
     cmd = {
       "Yazi",
       "Yazi cwd",
@@ -69,7 +70,14 @@ return {
         desc = "Explorer Yazi (cwd)",
       },
     },
-    opts = {},
+    ---@module "yazi"
+    ---@type YaziConfig | {}
+    opts = {
+      open_for_directories = true,
+    },
+    init = function()
+      vim.g.loaded_netrwPlugin = 1
+    end,
   },
   {
     "tiagovla/scope.nvim",

@@ -71,6 +71,7 @@ return {
           },
         },
         group_empty_dirs = true,
+        hijack_netrw_behavior = "disabled",
       },
       popup_border_style = "rounded",
       sort_case_insensitive = true,
