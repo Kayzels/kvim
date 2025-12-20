@@ -90,6 +90,11 @@ return {
       quote = {
         repeat_linebreak = true,
       },
+      html = {
+        comment = {
+          conceal = false,
+        },
+      },
     },
     ft = KyzVim.markdown.filetypes,
     config = function(_, opts)
