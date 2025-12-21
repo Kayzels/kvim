@@ -13,7 +13,10 @@ return {
       end
     end,
     dependencies = {
-      "folke/trouble.nvim",
+      {
+        "Kayzels/trouble.nvim",
+        branch = "statusline-icon",
+      },
       -- "folke/snacks.nvim",
     },
     opts = function()
@@ -139,14 +142,17 @@ return {
           title = false,
           filter = { range = true },
           format = "{kind_icon}{symbol.name:Normal}",
-          hl_group = "lualine_c_normal",
+          sep = "  ",
+          -- hl_group = "lualine_c_normal",
         })
-        table.insert(opts.sections.lualine_c, {
-          symbols and symbols.get,
-          cond = function()
-            return vim.b.trouble_lualine ~= false and symbols.has()
-          end,
-        })
+        opts.winbar.lualine_b = {
+          {
+            symbols and symbols.get,
+            cond = function()
+              return vim.b.trouble_lualine ~= false and symbols.has()
+            end,
+          },
+        }
       end
     end,
   },

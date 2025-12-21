@@ -202,7 +202,8 @@ local M = {
   },
   -- better diagnostics list and others
   {
-    "folke/trouble.nvim",
+    "Kayzels/trouble.nvim",
+    branch = "statusline-icon",
     cmd = { "Trouble" },
     ---@module 'trouble'
     ---@type trouble.Config
