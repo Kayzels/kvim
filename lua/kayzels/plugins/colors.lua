@@ -44,6 +44,7 @@ return {
           SnacksNormal = { link = "NormalFloat" },
           ["@lsp.type.enumMember"] = { fg = colors.peach },
           RenderMarkdownCodeInline = { bg = colors.crust },
+          RenderMarkdownKbdElement = { bg = colors.crust, fg = colors.lavender },
           RenderMarkdownQuote1 = { bg = colors.crust },
           ["@markup.quote.markdown"] = { fg = colors.text },
 
@@ -151,6 +152,7 @@ return {
         hl["@lsp.typemod.variable.global"] = hl["@variable.builtin"]
         hl["@markup.raw.markdown_inline"] = { bg = c.terminal_black }
         hl["@markup.strong"] = { bold = true, fg = c.blue }
+        hl.RenderMarkdownKbdElement = { bg = c.bg_dark1, fg = c.yellow }
       end,
     },
   },

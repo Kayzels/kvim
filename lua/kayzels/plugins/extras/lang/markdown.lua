@@ -94,6 +94,13 @@ return {
         comment = {
           conceal = false,
         },
+        tag = {
+          kbd = {
+            icon = " ",
+            highlight = "RenderMarkdownKbdElement",
+            scope_highlight = "RenderMarkdownKbdElement",
+          },
+        },
       },
     },
     ft = KyzVim.markdown.filetypes,
