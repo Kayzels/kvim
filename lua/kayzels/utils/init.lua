@@ -14,6 +14,7 @@
 ---@field treesitter kayzels.utils.treesitter
 ---@field snippets kayzels.utils.snippets
 ---@field lsp kayzels.utils.lsp
+---@field neovide kayzels.utils.neovide
 local M = {}
 
 setmetatable(M, {

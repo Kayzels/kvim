@@ -24,6 +24,7 @@ function M.setup()
   KyzVim.format.setup()
   KyzVim.root.setup()
   KyzVim.theme.setup()
+  KyzVim.neovide.setup()
   if vim.g.vscode then
     vim.api.nvim_exec_autocmds("User", {
       pattern = "VSCodeVimKeymaps",
