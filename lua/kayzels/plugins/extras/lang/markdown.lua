@@ -102,6 +102,14 @@ return {
           },
         },
       },
+      callout = {
+        exercise = {
+          raw = "[!EXERCISE]",
+          rendered = "󰇥  Exercise",
+          highlight = "RenderMarkdownHint",
+          category = "obsidian",
+        },
+      },
     },
     ft = KyzVim.markdown.filetypes,
     config = function(_, opts)
