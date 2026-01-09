@@ -123,6 +123,7 @@ return {
       })
 
       vim.treesitter.language.register("html", { "xhtml" })
+      vim.treesitter.language.register("markdown", { "tabs" })
     end,
   },
   {
