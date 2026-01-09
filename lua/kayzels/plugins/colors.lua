@@ -63,6 +63,7 @@ return {
           ["@property.id.css"] = { fg = colors.blue },
           ["@type.tag.css"] = { fg = colors.mauve },
           ["@markup.raw"] = { fg = colors.teal },
+          ["@markup.raw.block.markdown"] = { fg = colors.text },
         }
         return groups
       end,
