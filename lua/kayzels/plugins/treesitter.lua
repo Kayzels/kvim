@@ -39,7 +39,6 @@ return {
         "luap",
         "markdown",
         "markdown_inline",
-        "norg",
         "ninja",
         "printf",
         "python",
