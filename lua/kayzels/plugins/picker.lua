@@ -42,6 +42,7 @@ return {
     -- in the buffers picker. Instead, use <c-s>
     -- stylua: ignore
     keys = {
+      { "<leader>cl", function() Snacks.picker.lsp_config() end, desc = "Lsp Info"},
       { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
       { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
