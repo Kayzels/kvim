@@ -56,6 +56,7 @@ return {
   },
   {
     "rachartier/tiny-inline-diagnostic.nvim",
+    cond = false,
     event = "VeryLazy",
     priority = 1000,
     opts = {
