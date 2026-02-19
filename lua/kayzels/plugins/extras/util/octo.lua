@@ -29,7 +29,7 @@ return {
     opts = {
       enable_builtin = true,
       default_to_projects_v2 = true,
-      default_merge_method = "commit",
+      default_merge_method = "merge",
       picker = "snacks",
     },
   },

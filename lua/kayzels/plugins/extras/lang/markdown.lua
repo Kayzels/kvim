@@ -136,6 +136,9 @@ return {
     ---@module 'obsidian'
     ---@type obsidian.config
     opts = {
+      frontmatter = {
+        enabled = false,
+      },
       legacy_commands = false,
       workspaces = {
         {
@@ -143,7 +146,6 @@ return {
           path = "~/projects/Obsidian",
         },
       },
-      disable_frontmatter = true,
       statusline = { enabled = false },
       footer = { enabled = false },
       ui = {
