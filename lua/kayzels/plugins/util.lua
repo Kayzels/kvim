@@ -93,4 +93,7 @@ return {
       insert_mode = false,
     },
   },
+  {
+    "https://github.com/mbbill/undotree",
+  },
 }
