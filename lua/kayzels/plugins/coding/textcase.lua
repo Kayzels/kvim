@@ -1,43 +1,38 @@
----@class TextCaseMapping
----@field key string
----@field case string
----@field lsp string
+---@class TextCaseMapping : TextCaseKeymapDefinition
 ---@field desc string
 
 ---@module 'lazy'
 ---Needed so that LazyKeysSpec is a known type
 
----@return TextCaseKeymapDefinition[]
-local function extend_keymap_definitions()
-  local definitions = require("textcase").default_keymapping_definitions
-
-  vim.list_extend(definitions, {
-    { method_name = "to_title_case", quick_replace = "t", operator = "ot", lsp_rename = "T" },
-    { method_name = "to_path_case", quick_replace = "/", operator = "o/", lsp_rename = "?" },
-    { method_name = "to_phrase_case", quick_replace = "f", operator = "of", lsp_rename = "F" },
-    { method_name = "to_dot_case", quick_replace = "d", operator = "od", lsp_rename = "D" },
-  })
-
-  for i, def in ipairs(definitions) do
-    if def.method_name == "to_dash_case" then
-      definitions[i] = vim.tbl_extend("force", def, { quick_replace = "k", lsp_rename = "K", operator = "ok" })
-    end
-  end
-
-  return definitions
-end
+---@type TextCaseMapping[]
+local text_case_defs = {
+  { quick_replace = "u", operator = "ou", method_name = "to_upper_case", lsp_rename = "U", desc = "TO UPPER CASE" },
+  { quick_replace = "l", operator = "ol", method_name = "to_lower_case", lsp_rename = "L", desc = "to lower case" },
+  { quick_replace = "s", operator = "os", method_name = "to_snake_case", lsp_rename = "S", desc = "to_snake_case" },
+  { quick_replace = "k", operator = "ok", method_name = "to_dash_case", lsp_rename = "K", desc = "to-kebab-case" },
+  --stylua: ignore
+  { quick_replace = "n", operator = "on", method_name = "to_constant_case", lsp_rename = "N", desc = "TO_CONSTANT_CASE" },
+  { quick_replace = "d", operator = "od", method_name = "to_dot_case", lsp_rename = "D", desc = "to.dot.case" },
+  { quick_replace = "c", operator = "oc", method_name = "to_camel_case", lsp_rename = "C", desc = "toCamelCase" },
+  { quick_replace = "p", operator = "op", method_name = "to_pascal_case", lsp_rename = "P", desc = "ToPascalCase" },
+  { quick_replace = "t", operator = "ot", method_name = "to_title_case", lsp_rename = "T", desc = "To Title Case" },
+  { quick_replace = "/", operator = "o/", method_name = "to_path_case", lsp_rename = "?", desc = "to/path/case" },
+  { quick_replace = "f", operator = "of", method_name = "to_phrase_case", lsp_rename = "F", desc = "To phrase case" },
+}
 
 ---@param opts TextCaseMapping
 ---@return LazyKeysSpec[]
 local function set_mapping(opts)
-  local key = opts.key
-  local lsp = opts.lsp
+  local key = opts.quick_replace
+  local operator = opts.operator
+  local lsp = opts.lsp_rename
   local desc = opts.desc
 
   ---@type LazyKeysSpec
   local n_mode = {
     "ga" .. key,
     desc = "Convert " .. desc,
+    mode = { "x", "n" },
   }
   ---@type LazyKeysSpec
   local lsp_mode = {
@@ -46,43 +41,23 @@ local function set_mapping(opts)
   }
   ---@type LazyKeysSpec
   local op_mode = {
-    "gao" .. key,
+    "ga" .. operator,
     desc = desc,
   }
-  ---@type LazyKeysSpec
-  local x_mode = {
-    "ga" .. key,
-    desc = "Convert " .. desc,
-    mode = { "x" },
-  }
-  return { n_mode, lsp_mode, op_mode, x_mode }
+  return { n_mode, lsp_mode, op_mode }
 end
 
 ---@return LazyKeysSpec[]
 local function set_text_case_mappings()
   if not vim.g.vscode then
     local wk = require("which-key")
-    wk.add({ "ga", group = "Text Case" })
+    wk.add({ "ga", group = "+text-case" })
     wk.add({ "gao", group = "Pending Mode Operator" })
   end
-  ---@type TextCaseMapping[]
-  local defs = {
-    { key = "u", case = "to_upper_case", lsp = "U", desc = "TO UPPER CASE" },
-    { key = "l", case = "to_lower_case", lsp = "L", desc = "to lower case" },
-    { key = "s", case = "to_snake_case", lsp = "S", desc = "to_snake_case" },
-    { key = "k", case = "to_dash_case", lsp = "K", desc = "to-kebab-case" },
-    { key = "n", case = "to_constant_case", lsp = "N", desc = "TO_CONSTANT_CASE" },
-    { key = "d", case = "to_dot_case", lsp = "D", desc = "to.dot.case" },
-    { key = "c", case = "to_camel_case", lsp = "C", desc = "toCamelCase" },
-    { key = "p", case = "to_pascal_case", lsp = "P", desc = "ToPascalCase" },
-    { key = "t", case = "to_title_case", lsp = "T", desc = "To Title Case" },
-    { key = "/", case = "to_path_case", lsp = "?", desc = "to/path/case" },
-    { key = "f", case = "to_phrase_case", lsp = "F", desc = "To phrase case" },
-  }
 
   ---@type LazyKeysSpec[]
   local mappings = {}
-  for _, def in ipairs(defs) do
+  for _, def in ipairs(text_case_defs) do
     local mapping = set_mapping(def)
     for _, v in ipairs(mapping) do
       table.insert(mappings, v)
@@ -100,9 +75,11 @@ return {
     ---@param opts textcase.config
     config = function(_, opts)
       require("textcase").setup(opts)
-      require("textcase.plugin.api").to_dash_case.desc = "to-kebab-case"
-      local defs = extend_keymap_definitions()
-      require("textcase").setup_keymappings(defs)
+      local api = require("textcase.plugin.api")
+      for _, def in ipairs(text_case_defs) do
+        api[def.method_name].desc = def.desc
+      end
+      require("textcase").setup_keymappings(text_case_defs)
     end,
     ---@type textcase.config
     opts = {
