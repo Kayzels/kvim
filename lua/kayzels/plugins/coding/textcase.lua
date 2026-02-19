@@ -4,45 +4,54 @@
 ---@field lsp string
 ---@field desc string
 
+---@module 'lazy'
+---Needed so that LazyKeysSpec is a known type
+
+---@return TextCaseKeymapDefinition[]
+local function extend_keymap_definitions()
+  local definitions = require("textcase").default_keymapping_definitions
+
+  vim.list_extend(definitions, {
+    { method_name = "to_title_case", quick_replace = "t", operator = "ot", lsp_rename = "T" },
+    { method_name = "to_path_case", quick_replace = "/", operator = "o/", lsp_rename = "?" },
+    { method_name = "to_phrase_case", quick_replace = "f", operator = "of", lsp_rename = "F" },
+    { method_name = "to_dot_case", quick_replace = "d", operator = "od", lsp_rename = "D" },
+  })
+
+  for i, def in ipairs(definitions) do
+    if def.method_name == "to_dash_case" then
+      definitions[i] = vim.tbl_extend("force", def, { quick_replace = "k", lsp_rename = "K", operator = "ok" })
+    end
+  end
+
+  return definitions
+end
+
 ---@param opts TextCaseMapping
 ---@return LazyKeysSpec[]
 local function set_mapping(opts)
   local key = opts.key
-  local case = opts.case
   local lsp = opts.lsp
   local desc = opts.desc
-  local textcase = require("textcase")
 
   ---@type LazyKeysSpec
   local n_mode = {
     "ga" .. key,
-    function()
-      textcase.current_word(case)
-    end,
     desc = "Convert " .. desc,
   }
   ---@type LazyKeysSpec
   local lsp_mode = {
     "ga" .. lsp,
-    function()
-      textcase.lsp_rename(case)
-    end,
     desc = "LSP rename " .. desc,
   }
   ---@type LazyKeysSpec
   local op_mode = {
     "gao" .. key,
-    function()
-      textcase.operator(case)
-    end,
     desc = desc,
   }
   ---@type LazyKeysSpec
   local x_mode = {
     "ga" .. key,
-    function()
-      textcase.operator(case)
-    end,
     desc = "Convert " .. desc,
     mode = { "x" },
   }
@@ -85,10 +94,17 @@ end
 
 return {
   {
-    "johmsalas/text-case.nvim",
+    "Kayzels/text-case.nvim",
+    dev = true,
+    ---@module 'textcase'
+    ---@param opts textcase.config
     config = function(_, opts)
       require("textcase").setup(opts)
+      require("textcase.plugin.api").to_dash_case.desc = "to-kebab-case"
+      local defs = extend_keymap_definitions()
+      require("textcase").setup_keymappings(defs)
     end,
+    ---@type textcase.config
     opts = {
       default_keymappings_enabled = false,
     },
