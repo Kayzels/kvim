@@ -19,8 +19,10 @@ function M.formatter(opts)
       local clients = vim.lsp.get_clients(require("lazy.core.util").merge({}, filter, { bufnr = buf }))
       ---@param client vim.lsp.Client
       local ret = vim.tbl_filter(function(client)
-        return client:supports_method("textDocument/formatting")
+        return (
+          client:supports_method("textDocument/formatting")
           or client:supports_method("textDocument/rangeFormatting")
+        ) and client.name ~= "qmlls"
       end, clients)
       ---@param client vim.lsp.Client
       return vim.tbl_map(function(client)
