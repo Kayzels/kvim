@@ -70,7 +70,8 @@ end
 return {
   {
     "Kayzels/text-case.nvim",
-    dev = true,
+    branch = "keys",
+    -- dev = true,
     ---@module 'textcase'
     ---@param opts textcase.config
     config = function(_, opts)
