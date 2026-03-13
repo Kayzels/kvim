@@ -89,6 +89,9 @@ local M = {
       },
     },
   },
+  {
+    "tpope/vim-sleuth",
+  },
 }
 
 local names = { "extras", "textcase" }
