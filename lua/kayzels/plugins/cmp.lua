@@ -7,7 +7,7 @@ return {
       "sources.default",
     },
     build = "rustup run nightly cargo build --release",
-    version = "*",
+    version = false,
     event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "rafamadriz/friendly-snippets",
