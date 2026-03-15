@@ -37,20 +37,15 @@ end
 
 ---@param opts? LspFormat
 function M.format(opts)
-  opts = vim.tbl_deep_extend(
-    "force",
-    {},
-    opts or {},
-    KyzVim.opts("nvim-lspconfig").format or {},
-    KyzVim.opts("conform.nvim").format or {}
-  )
+  opts = vim.tbl_deep_extend("force", {}, opts or {}, KyzVim.opts("nvim-lspconfig").format or {})
 
   local ok, conform = pcall(require, "conform")
 
   -- use conform for formatting with LSP when available,
   -- since it has better format diffing
   if ok then
-    opts.formatters = {}
+    -- should be `nil`, otherwise doesn't fetch options from `formatters_by_ft`
+    opts.formatters = nil
     conform.format(opts)
   else
     vim.lsp.buf.format(opts)
