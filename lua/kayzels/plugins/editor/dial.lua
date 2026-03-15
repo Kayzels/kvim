@@ -93,20 +93,6 @@ return {
       cyclic = true,
     })
 
-    local weekdays = augend.constant.new({
-      elements = {
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      },
-      word = true,
-      cyclic = true,
-    })
-
     local months = augend.constant.new({
       elements = {
         "January",
@@ -121,15 +107,6 @@ return {
         "October",
         "November",
         "December",
-      },
-      word = true,
-      cyclic = true,
-    })
-
-    local capitalized_boolean = augend.constant.new({
-      elements = {
-        "True",
-        "False",
       },
       word = true,
       cyclic = true,
@@ -155,10 +132,11 @@ return {
           augend.integer.alias.hex,
           augend.date.alias["%Y/%m/%d"],
           augend.constant.alias.bool,
-          weekdays,
+          augend.constant.alias.en_weekday,
+          augend.constant.alias.en_weekday_full,
           months,
           ordinal_numbers,
-          capitalized_boolean,
+          augend.constant.alias.Bool,
           logical_alias,
         },
         typescript = {
