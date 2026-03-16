@@ -27,7 +27,13 @@ return {
   },
   {
     "sphamba/smear-cursor.nvim",
-    cond = not vim.g.neovide,
+    cond = function()
+      if vim.g.neovide then
+        return false
+      end
+      local current_term = os.getenv("TERM")
+      return current_term ~= "xterm-kitty"
+    end,
     opts = function()
       local smear = require("smear_cursor")
       Snacks.toggle({
