@@ -16,7 +16,7 @@ return {
           information = { "undercurl" },
         },
       },
-      transparent_background = false,
+      transparent_background = true,
       styles = {
         comments = { "italic" },
         conditionals = {},
@@ -104,6 +104,8 @@ return {
         comments = { italic = true },
         keywords = { italic = false },
         functions = { bold = true },
+        sidebars = "transparent",
+        floats = "dark",
         variables = {},
       },
       lualine_bold = true,
@@ -154,6 +156,7 @@ return {
         hl["@markup.raw.markdown_inline"] = { bg = c.terminal_black }
         hl["@markup.strong"] = { bold = true, fg = c.blue }
         hl.RenderMarkdownKbdElement = { bg = c.bg_dark1, fg = c.yellow }
+        hl.EndOfBuffer = "NONE"
       end,
     },
   },
