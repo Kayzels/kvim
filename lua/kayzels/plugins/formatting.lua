@@ -45,7 +45,7 @@ return {
             url = "https://doc.qt.io/qt-6//qtqml-tooling-qmlformat.html",
             description = "qmlformat is a tool that automatically formats QML files in accordance with the QML Coding Conventions.",
           },
-          command = "qmlformat",
+          command = "/usr/lib/qt6/bin/qmlformat",
           args = {
             "--force",
             "--inplace",
