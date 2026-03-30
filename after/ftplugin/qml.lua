@@ -15,11 +15,11 @@ _G.qml_indent = function()
   local sw = vim.fn.shiftwidth()
 
   -- If the previous line ended with an opening brace, increase indent
-  if prev_line:match("{%s*$") then
+  if prev_line:match("[{%[]%s*$") then
     indent = indent + sw
   end
 
-  if current_line:match("^%s*}") then
+  if current_line:match("^%s*[}%]]") then
     indent = indent - sw
   end
 
