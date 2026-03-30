@@ -13,11 +13,12 @@ return {
     lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file from the cmdline
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     opts_extend = { "ensure_installed" },
+    ---@alias kyzvim.TSFeat { enable?: boolean, disable?: string[] }
     ---@class kyzvim.TSConfig: TSConfig
     opts = {
-      highlight = { enable = true },
-      indent = { enable = true },
-      folds = { enable = true },
+      highlight = { enable = true }, ---@type kyzvim.TSFeat
+      indent = { enable = true }, ---@type kyzvim.TSFeat
+      folds = { enable = true }, ---@type kyzvim.TSFeat
       ensure_installed = {
         "bash",
         "c",
@@ -78,22 +79,32 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("kyzvim_treesitter", { clear = true }),
         callback = function(ev)
-          if not KyzVim.treesitter.have(ev.match) then
+          local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
+          if not KyzVim.treesitter.have(ft) then
             return
           end
 
+          ---@param feat string
+          ---@param query string
+          local function enabled(feat, query)
+            local f = opts[feat] or {} ---@type kyzvim.TSFeat
+            return f.enable ~= false
+              and not (type(f.disable) == "table" and vim.tbl_contains(f.disable, lang))
+              and KyzVim.treesitter.have(ft, query)
+          end
+
           -- highlighting
-          if vim.tbl_get(opts, "highlight", "enable") ~= false then
-            pcall(vim.treesitter.start)
+          if enabled("highlight", "highlights") then
+            pcall(vim.treesitter.start, ev.buf)
           end
 
           -- indents
-          if vim.tbl_get(opts, "indent", "enable") ~= false then
+          if enabled("indent", "indents") then
             KyzVim.set_default("indentexpr", "v:lua.KyzVim.treesitter.indentexpr()")
           end
 
           -- folds
-          if vim.tbl_get(opts, "folds", "enable") ~= false then
+          if enabled("folds", "folds") then
             if KyzVim.set_default("foldmethod", "expr") then
               KyzVim.set_default("foldexpr", "v:lua.KyzVim.treesitter.foldexpr()")
             end
