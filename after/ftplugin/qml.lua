@@ -25,8 +25,3 @@ _G.qml_indent = function()
 
   return indent
 end
-
-vim.schedule(function()
-  vim.bo.indentexpr = ""
-  vim.bo.indentexpr = "v:lua.qml_indent()"
-end)
