@@ -37,6 +37,7 @@ return {
         lua = { "stylua" },
         python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
         qml = { "qmlformat" },
+        cpp = { "clang-format" },
       },
       formatters = {
         injected = { options = { ignore_errors = true } },
