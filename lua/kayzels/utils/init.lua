@@ -15,6 +15,7 @@
 ---@field snippets kayzels.utils.snippets
 ---@field lsp kayzels.utils.lsp
 ---@field neovide kayzels.utils.neovide
+---@field diagnostic kayzels.utils.diagnostic
 local M = {}
 
 setmetatable(M, {
