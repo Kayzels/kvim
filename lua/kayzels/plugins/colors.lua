@@ -1,3 +1,39 @@
+---@param colors CtpColors<string>
+---@return {[string]: CtpHighlight}
+local function get_ctp_diagnostic_highlights(colors)
+  local o = require("catppuccin").options
+  local u = require("catppuccin.utils.colors")
+  local darken_percentage = 0.095
+
+  return {
+    DiagnosticVirtualTextError = {
+      bg = u.darken(colors.red, darken_percentage, colors.base),
+      fg = colors.red,
+      style = o.lsp_styles.virtual_text.errors,
+    },
+    DiagnosticVirtualTextWarn = {
+      bg = u.darken(colors.yellow, darken_percentage, colors.base),
+      fg = colors.yellow,
+      style = o.lsp_styles.virtual_text.warnings,
+    },
+    DiagnosticVirtualTextInfo = {
+      bg = u.darken(colors.sky, darken_percentage, colors.base),
+      fg = colors.sky,
+      style = o.lsp_styles.virtual_text.information,
+    },
+    DiagnosticVirtualTextHint = {
+      bg = u.darken(colors.teal, darken_percentage, colors.base),
+      fg = colors.teal,
+      style = o.lsp_styles.virtual_text.hints,
+    },
+    DiagnosticVirtualTextOk = {
+      bg = u.darken(colors.green, darken_percentage, colors.base),
+      fg = colors.green,
+      style = o.lsp_styles.virtual_text.ok,
+    },
+  }
+end
+
 return {
   {
     "catppuccin/nvim",
@@ -65,7 +101,9 @@ return {
           ["@markup.raw"] = { fg = colors.teal },
           ["@markup.raw.block.markdown"] = { fg = colors.text },
         }
-        return groups
+
+        local diagnostic_groups = get_ctp_diagnostic_highlights(colors)
+        return vim.tbl_deep_extend("force", groups, diagnostic_groups)
       end,
       integrations = {
         blink_cmp = {
