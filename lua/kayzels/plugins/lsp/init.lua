@@ -10,32 +10,6 @@ return {
     opts = function()
       ---@class PluginLspOpts
       local ret = {
-        -- options for vim.diagnostic.config
-        ---@type vim.diagnostic.Opts
-        diagnostics = {
-          underline = true,
-          update_in_insert = false,
-          -- Use tiny-inline-diagnostic instead
-          -- virtual_text = false,
-          virtual_text = {
-            spacing = 4,
-            source = "if_many",
-            prefix = "icons",
-          },
-          severity_sort = true,
-          signs = {
-            text = {
-              [vim.diagnostic.severity.ERROR] = KyzVim.icons.diagnostics.Error,
-              [vim.diagnostic.severity.WARN] = KyzVim.icons.diagnostics.Warn,
-              [vim.diagnostic.severity.HINT] = KyzVim.icons.diagnostics.Hint,
-              [vim.diagnostic.severity.INFO] = KyzVim.icons.diagnostics.Info,
-            },
-          },
-          float = {
-            border = "rounded",
-            source = true,
-          },
-        },
         inlay_hints = {
           enabled = true,
           exclude = {},
@@ -143,18 +117,7 @@ return {
       end
 
       -- Diagnostics
-      if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
-        opts.diagnostics.virtual_text.prefix = function(diagnostic)
-          local icons = KyzVim.icons.diagnostics
-          for d, icon in pairs(icons) do
-            if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-              return icon
-            end
-          end
-          return "●"
-        end
-      end
-      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+      KyzVim.diagnostic.set_config()
 
       if opts.servers["*"] then
         vim.lsp.config("*", opts.servers["*"])
