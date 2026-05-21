@@ -142,7 +142,7 @@ return {
       legacy_commands = false,
       workspaces = {
         {
-          name = "personal",
+          name = "main",
           path = "~/projects/Obsidian",
         },
       },
