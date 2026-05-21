@@ -143,7 +143,7 @@ local M = {
     opts = {
       indent = { enabled = true },
       image = {
-        enabled = true,
+        enabled = false,
         doc = {
           enabled = true,
           float = false,
