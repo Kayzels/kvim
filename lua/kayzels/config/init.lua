@@ -33,6 +33,7 @@ function M.setup()
 end
 
 M.did_init = false
+M._options = {} ---@type vim.wo|vim.bo
 function M.init()
   if M.did_init then
     return
@@ -41,6 +42,10 @@ function M.init()
 
   -- delay notifications till vim.notify repalced or after 500 ms
   KyzVim.lazy_notify()
+
+  M._options.indentexpr = vim.o.indentexpr
+  M._options.foldmethod = vim.o.foldmethod
+  M._options.foldexpr = vim.o.foldexpr
 
   -- hide deprecation warnings
   ---@diagnostic disable-next-line: duplicate-set-field
