@@ -43,9 +43,15 @@ map("n", "<leader>bo", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
--- Clear search and stop snippet on escape
+-- Clear search, multicursors and stop snippet on escape
 map({ "i", "n", "s" }, "<esc>", function()
   vim.cmd("noh")
+
+  if vim.fn.mode() == "n" then
+    local mc_ns = vim.api.nvim_create_namespace("nvim.multicursor")
+    vim.api.nvim_buf_clear_namespace(0, mc_ns, 0, -1)
+  end
+
   if vim.snippet then
     vim.snippet.stop()
   end
