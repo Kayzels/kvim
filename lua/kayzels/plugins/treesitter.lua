@@ -17,7 +17,7 @@ return {
     ---@class kyzvim.TSConfig: TSConfig
     opts = {
       highlight = { enable = true }, ---@type kyzvim.TSFeat
-      indent = { enable = true }, ---@type kyzvim.TSFeat
+      indent = { enable = true, disable = { "rust" } }, ---@type kyzvim.TSFeat
       folds = { enable = true }, ---@type kyzvim.TSFeat
       ensure_installed = {
         "bash",
