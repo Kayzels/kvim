@@ -32,6 +32,7 @@ local extra_liners = {
   "/nav",
   "dt",
   "dd",
+  "img",
 }
 
 return {
