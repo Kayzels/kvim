@@ -4,7 +4,7 @@
 ---@param file_info FileInfo
 ---@return string
 local function GetOutputDir(file_info)
-  local root_patterns = { "Notes", "Exercises", "Assignment", "Assessment", "Exam", "cv", "Motivational" }
+  local root_patterns = { "Notes", "Exercises", "Assignment", "Assessment", "Exam", "cv", "Motivational", "jobs" }
   local result = ""
   for _, pattern in ipairs(root_patterns) do
     if string.find(string.lower(file_info.jobname), string.lower(pattern), 1) ~= nil then
@@ -70,6 +70,7 @@ return {
       vim.g.vimtex_view_general_viewer = "okular"
       vim.g.vimtex_view_general_options = "--unique file:@pdf\\#src:@line@tex"
       vim.g.vimtex_doc_handlers = { "vimtex#doc#handlers#texdoc" }
+      vim.g.vimtex_mappings_disable = { ["n"] = { "K" } }
     end,
   },
   {
