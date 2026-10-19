@@ -85,6 +85,7 @@ local M = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
         { path = "snacks.nvim", words = { "Snacks" } },
         { path = "KyzVim", words = { "KyzVim" } },
+        { path = vim.env.VIMRUNTIME, words = { "vim" } },
         -- TODO: Wezterm types library installation
       },
     },
