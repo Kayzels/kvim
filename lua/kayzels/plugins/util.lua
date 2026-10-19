@@ -68,6 +68,19 @@ return {
               return MiniHipatterns.compute_hex_color_group(color, "bg")
             end,
           },
+          pal_files = {
+            pattern = function(buf_id)
+              if vim.bo[buf_id].filetype ~= "pal" then
+                return nil
+              end
+              return "%(%d+,?%d+,?%d+%)"
+            end,
+            group = function(_, match)
+              local red, green, blue = match:match("%((%d+), ?(%d+), ?(%d+)%)")
+              local hex = string.format("#%02x%02x%02x", red, green, blue)
+              return MiniHipatterns.compute_hex_color_group(hex, "bg")
+            end,
+          },
           -- rgb_color = {
           --   pattern = "%(%d+, ?%d+, ?%d+%)",
           --   ---@param _ any
