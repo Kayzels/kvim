@@ -129,6 +129,7 @@ return {
       vim.filetype.add({
         extension = {
           tcss = "tcss",
+          qss = "css",
         },
       })
 
