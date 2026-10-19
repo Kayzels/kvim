@@ -83,6 +83,7 @@ return {
           RenderMarkdownKbdElement = { bg = colors.crust, fg = colors.lavender },
           RenderMarkdownQuote1 = { bg = colors.crust },
           ["@markup.quote.markdown"] = { fg = colors.text },
+          -- ["@lsp.type.variable"] = { fg = colors.text },
 
           -- Old colors that have been replaced
           ["@variable.member"] = { fg = colors.lavender },
