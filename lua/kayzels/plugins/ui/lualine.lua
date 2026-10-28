@@ -49,7 +49,7 @@ return {
               padding = { left = 2, right = 2 },
               color = nil,
             },
-            { "branch", padding = { left = 1, right = 1 }, icon = "" },
+            { "branch", padding = { left = 1, right = 1 } },
           },
           lualine_c = {
             KyzVim.lualine.root_dir(),
